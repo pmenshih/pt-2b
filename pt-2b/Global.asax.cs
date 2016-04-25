@@ -20,20 +20,28 @@ namespace pt_2b
 
         protected void Application_PostMapRequestHandler(object sender, EventArgs e)
         {
-            if (Request.Cookies["ASP.NET_SessionIdTemp"] != null)
+            try
             {
-                if (Request.Cookies["ASP.NET_SessionId"] == null)
-                    Request.Cookies.Add(new HttpCookie("ASP.NET_SessionId", Request.Cookies["ASP.NET_SessionIdTemp"].Value));
-                else
-                    Request.Cookies["ASP.NET_SessionId"].Value = Request.Cookies["ASP.NET_SessionIdTemp"].Value;
+                if (Request.Cookies["ASP.NET_SessionIdTemp"] != null)
+                {
+                    if (Request.Cookies["ASP.NET_SessionId"] == null)
+                        Request.Cookies.Add(new HttpCookie("ASP.NET_SessionId", Request.Cookies["ASP.NET_SessionIdTemp"].Value));
+                    else
+                        Request.Cookies["ASP.NET_SessionId"].Value = Request.Cookies["ASP.NET_SessionIdTemp"].Value;
+                }
             }
+            catch (Exception) { }
         }
-
+         
         protected void Application_PostRequestHandlerExecute(object sender, EventArgs e)
         {
-            HttpCookie cookie = new HttpCookie("ASP.NET_SessionIdTemp", Session.SessionID);
-            cookie.Expires = DateTime.Now.AddMinutes(Session.Timeout);
-            Response.Cookies.Add(cookie);
+            try
+            {
+                HttpCookie cookie = new HttpCookie("ASP.NET_SessionIdTemp", Session.SessionID);
+                cookie.Expires = DateTime.Now.AddMinutes(Session.Timeout);
+                Response.Cookies.Add(cookie);
+            }
+            catch (Exception) { }
         }
 
 
