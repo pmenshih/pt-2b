@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "test.psycho.ru";
+}
+
+<div class="jumbotron">
+    <div class="row">
+        <div class="col-md-12">
+        @using (Ajax.BeginForm("CodeCheck", "Test", new AjaxOptions { UpdateTargetId = "checkResults", HttpMethod="Post", OnBegin = "return ButtonShowLoading('submitButton');", OnComplete = "return ButtonSetHtml('submitButton', 'Начать тест &raquo;');" }))
+        {
+            @Html.AntiForgeryToken()
+            <h3>Здравствуйте!</h3>
+            if (Session["tBox"] == null)
+            {
+                <div class="input-group">
+                    <input type="text" class="form-control" name="code" required="required" placeholder="кодовое слово">
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-primary" id="submitButton">Начать тест &raquo;</button>
+                    </span>
+                </div>
+                <div id="checkResults"></div>
+            }
+            else
+            {
+                var testName = ((pt_2b.Models.TestBox)Session["tBox"]).test.name;
+                <div>
+                    Вы можете <a href="/test/filling">продолжить заполнение анкеты «@testName»</a>.
+                </div>
+            }
+        }</div>
+    </div>
+    
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryajax")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/pt")
+}
+
+<!--<div class="row">
+    <div class="col-md-4">
+        <h2>Getting started</h2>
+        <p>
+            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+            enables a clean separation of concerns and gives you full control over markup
+            for enjoyable, agile development.
+        </p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Get more libraries</h2>
+        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Web Hosting</h2>
+        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    </div>
+</div>-->

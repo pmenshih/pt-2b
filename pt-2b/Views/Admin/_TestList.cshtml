@@ -1,0 +1,40 @@
+﻿@using pt_2b.Models;
+
+<hr />
+@Html.AntiForgeryToken()
+<h4>Анкеты</h4>
+@{ 
+    DataBase db = new DataBase();
+}
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Название
+                </th>
+                <th>
+                    Кодовое слово
+                </th>
+                <th>
+                    Ответов
+                </th>
+            </tr>
+        </thead>
+        @foreach (Test t in db.Tests.Where(m => m.id > 0))
+        {
+            var answers = db.TestAnswers.Where(a => a.testCode == t.code).Count();
+            <tr>
+                <td>
+                    @t.name
+                </td>
+                <td>
+                    @t.code
+                </td>
+                <td>
+                    <a href="/test/results?code=@t.code">@answers</a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

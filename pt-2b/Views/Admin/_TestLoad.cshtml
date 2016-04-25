@@ -1,0 +1,27 @@
+﻿@using (Html.BeginForm("TestUpload", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+{
+    <hr/>
+    @Html.AntiForgeryToken()
+    <h4>Загрузка файла анкеты</h4>
+    <div class="form-group">
+        <label class="col-md-2 control-label">Файл анкеты</label>
+        <div class="col-md-10">
+            <input class="form-control btn btn-default" required="required" name="testFile" type="file" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">Обновление</label>
+        <div class="col-md-10 checkbox">
+            <label><input type="checkbox" name="uploadCanUpdate" value="1">разрешить</label>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Загрузить" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

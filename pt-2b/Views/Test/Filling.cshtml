@@ -1,0 +1,42 @@
+﻿@model pt_2b.Models.TestBox
+@{
+    ViewBag.Title = Model.test.name;
+}
+<div class="jumbotron">
+    @using (Html.BeginForm("filling", "test", FormMethod.Post))
+    {
+        <!--<h5>
+            @Model.test.name
+        </h5>-->
+        <h5>
+            Вопрос @(Model.currentQuestion + 1) из @Model.test.questions.Count()
+        </h5>
+        <!--<hr />-->
+        <h4 id="testQuestionText">@Html.Raw(@Model.test.questions[@Model.currentQuestion].text)</h4>
+
+        <div class="form-group">
+            @if (Model.test.questions[Model.currentQuestion].type == "hard")
+            {
+                <div class="btn-group-vertical" data-toggle="buttons">
+                    @foreach (var a in Model.test.questions[Model.currentQuestion].answers)
+                    {
+                        <label class="btn btn-default" id="answerHardButton"><input type="radio" name="answerHard" id="answerHard" value="@a.Value" />@a.Value</label>
+                    }
+                </div>
+            }
+            else if (Model.test.questions[Model.currentQuestion].type == "text")
+            {
+                <textarea class="form-control" rows="5" name="answerText"></textarea>
+            }
+        </div>
+
+        <div class="btn-group">
+            <button name="action" value="prev" type="submit" class="btn btn-default" @Model.disableBack id="backButton">&laquo; Назад</button>
+            <button name="action" value="next" type="submit" class="btn btn-primary" id="nextButton">Вперед &raquo;</button>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/pt")
+}
