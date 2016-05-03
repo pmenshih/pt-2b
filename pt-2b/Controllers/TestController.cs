@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Text.RegularExpressions;
+using System.Text;
 
 using pt_2b.Models;
 
@@ -187,18 +188,28 @@ namespace pt_2b.Controllers
             csv += ";\r\n";
             answersCount = 0;
 
+            Encoding srcEnc = Encoding.UTF8;
+            Encoding destEnc = Encoding.GetEncoding(1251);
+
             foreach (TestAnswer ta in db.TestAnswers.Where(x => x.testCode == code))
             {
                 csv += ta.id.ToString() + ";";
 
                 Test tBoxa = test.DeserializeFromXmlString(ta.raw);
+                
                 foreach (Question q in tBoxa.questions)
                 {
-                    if (q.answer.Contains("@#@"))
+                    string ans = q.answer.Replace(";", "|").Replace("\r", "|").Replace("\n", "|");
+                    //смена кодировки
+                    byte[] srcBytes = srcEnc.GetBytes(ans);
+                    byte[] destBytes = Encoding.Convert(srcEnc, destEnc, srcBytes);
+                    ans = destEnc.GetString(destBytes);
+                    //---------------
+                    if (ans.Contains("@#@"))
                     {
-                        csv += Regex.Split(q.answer, "@#@")[1];
+                        csv += Regex.Split(ans, "@#@")[1];
                     }
-                    else csv += q.answer;
+                    else csv += ans;
                     csv +=  ";";
                 }
 
@@ -207,7 +218,8 @@ namespace pt_2b.Controllers
             }
             
             string filename = String.Format("pt-{0}-{1}.csv", test.code, answersCount.ToString()); ;
-            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", filename);
+            //return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", filename);
+            return File(destEnc.GetBytes(csv), "text/csv", filename);
         }
     }
 }
