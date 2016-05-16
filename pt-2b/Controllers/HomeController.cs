@@ -10,8 +10,6 @@ namespace pt_2b.Controllers
     {
         public ActionResult Index()
         {
-            //костыль!
-            ViewData["hideMenu"] = "hidden";
             return View();
         }
 

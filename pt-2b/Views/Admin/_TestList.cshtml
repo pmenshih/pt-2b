@@ -21,9 +21,9 @@
                 </th>
             </tr>
         </thead>
-        @foreach (Test t in db.Tests.Where(m => m.id > 0))
+        @foreach (Form t in db.Forms.Where(m => m.id > 0))
         {
-            var answers = db.TestAnswers.Where(a => a.testCode == t.code).Count();
+            var answers = db.FormAnswers.Where(a => a.testCode == t.code).Count();
             <tr>
                 <td>
                     @t.name

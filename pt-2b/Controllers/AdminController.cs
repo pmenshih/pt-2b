@@ -34,15 +34,11 @@ namespace pt_2b.Controllers
             bool uploadCanUpdate = formCollection["uploadCanUpdate"] == "1" ? true : false;
 
             //десериализация
-            Models.Test test = new Test();
+            Models.Form test = new Form();
             test = test.DeserializeFromXmlString(testString);
 
-            db.Tests.Add(test);
+            db.Forms.Add(test);
             db.SaveChanges();
-
-            //работа с пользователем
-            //сохранение в БД
-            //редирект на страницу теста
 
             return Redirect("/admin");
         }

@@ -18,8 +18,10 @@ namespace pt_2b
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
 
+        //МЕТОД СОДЕРЖИТ КОСТЫЛЬ ДЛЯ СОХРАНЕНИЯ ПРОГРЕССА ЗАПОЛНЕНИЯ АНКЕТЫ ПОСЛЕ ЗАКРЫТИЯ БРАУЗЕРА
         protected void Application_PostMapRequestHandler(object sender, EventArgs e)
         {
+            //КОСТЫЛЬ!
             try
             {
                 if (Request.Cookies["ASP.NET_SessionIdTemp"] != null)
@@ -31,10 +33,13 @@ namespace pt_2b
                 }
             }
             catch (Exception) { }
+            //-------------------------------------------------------------------
         }
-         
+
+        //МЕТОД СОДЕРЖИТ КОСТЫЛЬ ДЛЯ СОХРАНЕНИЯ ПРОГРЕССА ЗАПОЛНЕНИЯ АНКЕТЫ ПОСЛЕ ЗАКРЫТИЯ БРАУЗЕРА
         protected void Application_PostRequestHandlerExecute(object sender, EventArgs e)
         {
+            //КОСТЫЛЬ!
             try
             {
                 HttpCookie cookie = new HttpCookie("ASP.NET_SessionIdTemp", Session.SessionID);
@@ -42,6 +47,7 @@ namespace pt_2b
                 Response.Cookies.Add(cookie);
             }
             catch (Exception) { }
+            //-------------------------------------------------------------------
         }
 
 

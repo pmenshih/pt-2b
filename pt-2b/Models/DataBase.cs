@@ -10,7 +10,7 @@ namespace pt_2b.Models
     {
         public DataBase(): base("DefaultConnection"){ }
 
-        public DbSet<Test> Tests { get; set; }
-        public DbSet<TestAnswer> TestAnswers { get; set; }
+        public DbSet<Form> Forms { get; set; }
+        public DbSet<FormAnswer> FormAnswers { get; set; }
     }
 }

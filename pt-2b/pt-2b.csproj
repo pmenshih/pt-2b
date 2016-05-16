@@ -185,7 +185,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Controllers\FormController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -193,7 +193,7 @@
     <Compile Include="Models\DataBase.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\TestModels.cs" />
+    <Compile Include="Models\FormModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -207,6 +207,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="scenarios\360_test_1.xml" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\bootstrap.min.css.map" />
@@ -267,9 +268,11 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\_TestLoad.cshtml" />
     <Content Include="Views\Shared\_ViewErrorMessage.cshtml" />
-    <Content Include="Views\Test\Filling.cshtml" />
-    <Content Include="Views\Test\Finish.cshtml" />
+    <Content Include="Views\Form\Filling.cshtml" />
+    <Content Include="Views\Form\Finish.cshtml" />
     <Content Include="Views\Admin\_TestList.cshtml" />
+    <Content Include="Views\Form\Index.cshtml" />
+    <Content Include="Views\Shared\_FormTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

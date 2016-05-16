@@ -1,30 +1,31 @@
-﻿@model pt_2b.Models.TestBox
+﻿@model pt_2b.Models.FormBox
 @{
-    ViewBag.Title = Model.test.name;
+    ViewBag.Title = Model.form.name;
+    Layout = "~/Views/Shared/_FormTemplate.cshtml";
 }
 <div class="jumbotron">
-    @using (Html.BeginForm("filling", "test", FormMethod.Post))
+    @using (Html.BeginForm("filling", "form", FormMethod.Post))
     {
         <!--<h5>
-            @Model.test.name
+            @Model.form.name
         </h5>-->
         <h5>
-            Вопрос @(Model.currentQuestion + 1) из @Model.test.questions.Count()
+            Вопрос @(Model.currentQuestion + 1) из @Model.form.questions.Count()
         </h5>
         <!--<hr />-->
-        <h4 id="testQuestionText">@Html.Raw(@Model.test.questions[@Model.currentQuestion].text)</h4>
+        <h4 id="testQuestionText">@Html.Raw(@Model.form.questions[@Model.currentQuestion].text)</h4>
 
         <div class="form-group">
-            @if (Model.test.questions[Model.currentQuestion].type == "hard")
+            @if (Model.form.questions[Model.currentQuestion].type == "hard")
             {
                 <div class="btn-group-vertical" data-toggle="buttons">
-                    @foreach (var a in Model.test.questions[Model.currentQuestion].answers)
+                    @foreach (var a in Model.form.questions[Model.currentQuestion].answers)
                     {
                         <label class="btn btn-default" id="answerHardButton"><input type="radio" name="answerHard" id="answerHard" value="@a.Value" />@a.Value</label>
                     }
                 </div>
             }
-            else if (Model.test.questions[Model.currentQuestion].type == "text")
+            else if (Model.form.questions[Model.currentQuestion].type == "text")
             {
                 <textarea class="form-control" rows="5" name="answerText"></textarea>
             }

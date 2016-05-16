@@ -7,18 +7,20 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
 using System.Text;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace pt_2b.Models
 {
-    public class TestBox
+    public class FormBox
     {
-        public Test test;
+        public Form form;
         public int currentQuestion = 0;
         public string disableBack = "disabled";
     }
 
     [XmlRoot(ElementName = "Test")]
-    public class Test
+    [Table("Tests")]
+    public class Form
     {
         public int? id { get; set; }
 
@@ -38,10 +40,10 @@ namespace pt_2b.Models
         [XmlIgnore]
         public string raw { get; set; }
 
-        public Test DeserializeFromXmlString(string xml)
+        public Form DeserializeFromXmlString(string xml)
         {
-            XmlSerializer s = new XmlSerializer(typeof(Test));
-            Test t = (Test)s.Deserialize(GenerateStreamFromString(xml));
+            XmlSerializer s = new XmlSerializer(typeof(Form));
+            Form t = (Form)s.Deserialize(GenerateStreamFromString(xml));
             //сохраним исходный сценарий анкеты
             t.raw = xml;
             return t;
@@ -49,7 +51,7 @@ namespace pt_2b.Models
 
         public string SerializeToXmlString()
         {
-            XmlSerializer s = new XmlSerializer(typeof(Test));
+            XmlSerializer s = new XmlSerializer(typeof(Form));
             Utf8StringWriter sw = new Utf8StringWriter();
             
             s.Serialize(sw, this);
@@ -114,7 +116,8 @@ namespace pt_2b.Models
         public string message { get; set; }
     }
 
-    public class TestAnswer
+    [Table("TestAnswers")]
+    public class FormAnswer
     {
         public int? id { get; set; }
 
