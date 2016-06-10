@@ -1,0 +1,57 @@
+<Test name="Тест-1" code="test-1" username="pnb" company="Психология и бизнес">
+	<Questions>
+		<Question type="hard" position="1" text="Уважаемый коллега!\n\nДанный тест является этапом тестирования функционала 360.\n\nХотите ли вы, чтобы тест поскорее закончился?">
+			<Answers>
+				<Answer position="1">Да</Answer>
+				<Answer position="2">Скорее да</Answer>
+				<Answer position="3">Затрудняюсь ответить</Answer>
+				<Answer position="4">Скорее нет</Answer>
+				<Answer position="5">Нет</Answer>
+			</Answers>
+		</Question>
+		<Question type="hard" position="2" text="вавы">
+			<Answers>
+				<Answer position="1">Да</Answer>
+				<Answer position="2">Скорее да</Answer>
+				<Answer position="3">Затрудняюсь ответить</Answer>
+				<Answer position="4">Скорее нет</Answer>
+				<Answer position="5">Нет</Answer>
+			</Answers>
+		</Question>
+		<Question type="hard" position="3" text="У нас стремятся понимать важные моменты в предметной области партнеров, учитывают их в работе.">
+			<Answers>
+				<Answer position="1">Да</Answer>
+				<Answer position="2">Скорее да</Answer>
+				<Answer position="3">Затрудняюсь ответить</Answer>
+				<Answer position="4">Скорее нет</Answer>
+				<Answer position="5">Нет</Answer>
+			</Answers>
+		</Question>
+		<Question type="hard" position="23" text="Я бы порекомендовал своим друзьям и знакомым устроиться на работу в нашу Компанию. (Оцените свою готовность по шкале от «0» – не готов рекомендовать, до «10» – максимально готов.)">
+			<Answers>
+				<Answer position="1" keyto="24">0 — не готов рекомендовать</Answer>
+				<Answer position="2" keyto="24">1</Answer>
+				<Answer position="3" keyto="24">2</Answer>
+				<Answer position="4" keyto="24">3</Answer>
+				<Answer position="5" keyto="24">4</Answer>
+				<Answer position="6" keyto="24">5</Answer>
+				<Answer position="7" keyto="24">6</Answer>
+				<Answer position="8">7</Answer>
+				<Answer position="9">8</Answer>
+				<Answer position="10">9</Answer>
+				<Answer position="11">10 — максимально готов</Answer>
+			</Answers>
+		</Question>
+		<Question type="text" position="24" isSecret="true" text="Укажите причину, по которой Вы не будете рекомендовать друзьям и знакомым устроиться на работу в нашу компанию.">
+		</Question>
+		<Question type="hard" position="33" text="Укажите ваш возраст:">
+			<Answers>
+				<Answer position="1">До 25 лет</Answer>
+				<Answer position="2">25 – 34 года</Answer>
+				<Answer position="3">35 – 44 года</Answer>
+				<Answer position="4">45 – 54 года</Answer>
+				<Answer position="5">55 лет и старше</Answer>
+			</Answers>
+		</Question>
+	</Questions>
+</Test>

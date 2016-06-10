@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "Оценка 360 test.psycho.ru";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="jumbotron">
+    <div class="row">
+        <div class="col-md-12">
+            @using (Ajax.BeginForm("CodeCheck", "THSForms", new AjaxOptions { UpdateTargetId = "checkResults", HttpMethod = "Post", OnBegin = "return ButtonShowLoading('submitButton');", OnComplete = "return ButtonSetHtml('submitButton', 'Начать тест &raquo;');" }))
+            {
+                @Html.AntiForgeryToken()
+                <h3>Здравствуйте!</h3>
+                if (Session["tBox"] == null)
+                {
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="code" required="required" placeholder="кодовое слово">
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-primary" id="submitButton">Начать тест &raquo;</button>
+                        </span>
+                    </div>
+                    <div id="checkResults"></div>
+                }
+                else
+                {
+                    var testName = ((pt_2b.Models.FormBox)Session["tBox"]).form.name;
+                    <div>
+                        Вы можете <a href="/form/filling">продолжить заполнение анкеты «@testName»</a>.
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryajax")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/pt")
+}
+

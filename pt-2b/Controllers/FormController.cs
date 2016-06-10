@@ -28,6 +28,16 @@ namespace pt_2b.Controllers
             {
                 return JavaScript("window.location = '/form/filling?code=" + code + "'");
             }
+            //КОСТЫЛЬ!!!
+            //вход для 360
+            else if (db.THSUsers.Where(t => t.code == code && t.answered == 0).Count() > 0)
+            {
+                return JavaScript("window.location = '/thsforms/filling?code=" + code + "'");
+            }
+            else if (db.THSUsers.Where(t => t.code == code && t.answered == 1).Count() > 0)
+            {
+                return PartialView("_ViewErrorMessage", new Models.ViewMessage { message = String.Format("Вы уже заполнили эту анкету.", code) });
+            }
             else
                 return PartialView("_ViewErrorMessage", new Models.ViewMessage { message = String.Format("Анкеты с кодовым словом «{0}» не найдено.", code) });
         }

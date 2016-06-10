@@ -1,0 +1,104 @@
+<Test name="Тестовая оценка 360, №2" code="360-2" username="psycho" company="Психология и бизнес">
+	<Questions>
+		<Question type="hard" position="1" text="Уважаемый коллега!\n\nВам предстоить оценить управленческие качества @utype@ Ниесова Игоря Владимировича. Данные, которые будут получены, имеют важное значение для совершенствования его как руководителя, помогут определить сильные стороны и качества, которые необходимо развивать. Результаты оценки будут сведены в общий документ без указания, кто давал оценку.\n\nОцените, насколько перечисленные в таблице утверждения соответствуют качествам человека в баллах от 1 до 5, где 1 — полное несоответствие человека приведенному утверждению, 5 — человек полностью соответствует утверждению.\nЕсли вы не наблюдали качество и не можете его оценить, выберите «0».\n\nПрислушивается к мнению о себе, не обидчив, нормально реагирует на критику">
+			<Answers>
+				<Answer position="1">5</Answer>
+				<Answer position="2">4</Answer>
+				<Answer position="3">3</Answer>
+				<Answer position="4">2</Answer>
+				<Answer position="5">1</Answer>
+				<Answer position="6">0 — не могу оценить</Answer>
+			</Answers>
+		</Question>
+		<Question type="hard" position="2" text="Хорошо работает в команде, настроен на сотрудничество.">
+			<Answers>
+				<Answer position="1">5</Answer>
+				<Answer position="2">4</Answer>
+				<Answer position="3">3</Answer>
+				<Answer position="4">2</Answer>
+				<Answer position="5">1</Answer>
+				<Answer position="6">0 — не могу оценить</Answer>
+			</Answers>
+		</Question>
+		<Question type="hard" position="3" text="Стремится совершенствовать рабочие процессы, предлагает идеи по улучшению.">
+			<Answers>
+				<Answer position="1">5</Answer>
+				<Answer position="2">4</Answer>
+				<Answer position="3">3</Answer>
+				<Answer position="4">2</Answer>
+				<Answer position="5">1</Answer>
+				<Answer position="6">0 — не могу оценить</Answer>
+			</Answers>
+		</Question>
+		<Question type="hard" position="4" text="Даёт конструктивную обратную связь, выдерживая баланс позитива и негатива.">
+			<Answers>
+				<Answer position="1">5</Answer>
+				<Answer position="2">4</Answer>
+				<Answer position="3">3</Answer>
+				<Answer position="4">2</Answer>
+				<Answer position="5">1</Answer>
+				<Answer position="6">0 — не могу оценить</Answer>
+			</Answers>
+		</Question>
+		<Question type="hard" position="5" text="Четко ставит задачи, всегда понятно, что и для чего нужно делать.">
+			<Answers>
+				<Answer position="1">5</Answer>
+				<Answer position="2">4</Answer>
+				<Answer position="3">3</Answer>
+				<Answer position="4">2</Answer>
+				<Answer position="5">1</Answer>
+				<Answer position="6">0 — не могу оценить</Answer>
+			</Answers>
+		</Question>
+		<Question type="hard" position="6" text="Своевременно предоставляет информацию, необходимую для работы.">
+			<Answers>
+				<Answer position="1">5</Answer>
+				<Answer position="2">4</Answer>
+				<Answer position="3">3</Answer>
+				<Answer position="4">2</Answer>
+				<Answer position="5">1</Answer>
+				<Answer position="6">0 — не могу оценить</Answer>
+			</Answers>
+		</Question>
+		<Question type="hard" position="7" text="Старается довести дело до конца, даже при наличии противодействия.">
+			<Answers>
+				<Answer position="1">5</Answer>
+				<Answer position="2">4</Answer>
+				<Answer position="3">3</Answer>
+				<Answer position="4">2</Answer>
+				<Answer position="5">1</Answer>
+				<Answer position="6">0 — не могу оценить</Answer>
+			</Answers>
+		</Question>
+		<Question type="hard" position="8" text="Держит выполнение поставленных задач под постоянным контролем.">
+			<Answers>
+				<Answer position="1">5</Answer>
+				<Answer position="2">4</Answer>
+				<Answer position="3">3</Answer>
+				<Answer position="4">2</Answer>
+				<Answer position="5">1</Answer>
+				<Answer position="6">0 — не могу оценить</Answer>
+			</Answers>
+		</Question>
+		<Question type="hard" position="9" text="Говорит о ценностях предприятия, его будущем и перспективе.">
+			<Answers>
+				<Answer position="1">5</Answer>
+				<Answer position="2">4</Answer>
+				<Answer position="3">3</Answer>
+				<Answer position="4">2</Answer>
+				<Answer position="5">1</Answer>
+				<Answer position="6">0 — не могу оценить</Answer>
+			</Answers>
+		</Question>
+		<Question type="hard" position="10" text="Создает в своей команде сильный моральный дух и психологический климат.">
+			<Answers>
+				<Answer position="1">5</Answer>
+				<Answer position="2">4</Answer>
+				<Answer position="3">3</Answer>
+				<Answer position="4">2</Answer>
+				<Answer position="5">1</Answer>
+				<Answer position="6">0 — не могу оценить</Answer>
+			</Answers>
+		</Question>
+	</Questions>
+</Test>
