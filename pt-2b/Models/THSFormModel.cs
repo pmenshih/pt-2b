@@ -10,6 +10,7 @@ namespace pt_2b.Models
         public int id { get; set; }
         public string name { get; set; }
         public int? organisationId { get; set; }
+        public string targetName { get; set; }
     }
 
     public class THSUser
@@ -21,5 +22,11 @@ namespace pt_2b.Models
         public string code { get; set; }
         public string raw { get; set; }
         public int answered { get; set; }
+    }
+
+    public class THSUserTypes
+    {
+        public int id { get; set; }
+        public string name { get; set; }
     }
 }

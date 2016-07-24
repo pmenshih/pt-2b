@@ -7,25 +7,37 @@
 <div class="jumbotron">
     <div class="row">
         <div class="col-md-12">
-            @using (Ajax.BeginForm("CodeCheck", "Form", new AjaxOptions { UpdateTargetId = "checkResults", HttpMethod = "Post", OnBegin = "return ButtonShowLoading('submitButton');", OnComplete = "return ButtonSetHtml('submitButton', 'Начать тест &raquo;');" }))
+            @using (Html.BeginForm("Index", "Form", FormMethod.Post))
             {
                 @Html.AntiForgeryToken()
                 <h3>Здравствуйте!</h3>
-                if (Session["tBox"] == null)
+                if (Session["tBox"] == null && Session["thsBox"] == null)
                 {
                     <div class="input-group">
                         <input type="text" class="form-control" name="code" required="required" placeholder="кодовое слово">
                         <span class="input-group-btn">
-                            <button type="submit" class="btn btn-primary" id="submitButton">Начать тест &raquo;</button>
+                            <button type="submit" name="action" value="next" class="btn btn-primary" id="submitButton">Начать тест &raquo;</button>
                         </span>
                     </div>
-                    <div id="checkResults"></div>
+                    if (Session["CheckMessage"] != null)
+                    {
+                        <div class="text-danger">
+                            @Session["CheckMessage"].ToString()
+                        </div>
+                    }
                 }
-                else
+                else if (Session["tBox"] != null)
                 {
                     var testName = ((pt_2b.Models.FormBox)Session["tBox"]).form.name;
                     <div>
                         Вы можете <a href="/form/filling">продолжить заполнение анкеты «@testName»</a>.
+                    </div>
+                }
+                else if (Session["thsBox"] != null)
+                {
+                    var testName = ((pt_2b.Models.FormBox)Session["thsBox"]).form.name;
+                    <div>
+                        Вы можете <a href="/thsforms/filling">продолжить заполнение анкеты «@testName»</a>.
                     </div>
                 }
             }

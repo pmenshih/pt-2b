@@ -188,6 +188,8 @@
     <Compile Include="Controllers\FormController.cs" />
     <Compile Include="Controllers\OrganisationController.cs" />
     <Compile Include="Controllers\THSFormsController.cs" />
+    <Compile Include="Controllers\THSUsersController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -289,6 +291,18 @@
     <Content Include="Views\THSForms\Start.cshtml" />
     <Content Include="Views\THSForms\Finish.cshtml" />
     <Content Include="Views\THSForms\Filling.cshtml" />
+    <Content Include="Views\THSForms\AllreadyDone.cshtml" />
+    <Content Include="Views\Users\Create.cshtml" />
+    <Content Include="Views\Users\Delete.cshtml" />
+    <Content Include="Views\Users\Details.cshtml" />
+    <Content Include="Views\Users\Edit.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Organisation\Create.cshtml" />
+    <Content Include="Views\THSUsers\Create.cshtml" />
+    <Content Include="Views\THSUsers\Delete.cshtml" />
+    <Content Include="Views\THSUsers\Details.cshtml" />
+    <Content Include="Views\THSUsers\Edit.cshtml" />
+    <Content Include="Views\THSUsers\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

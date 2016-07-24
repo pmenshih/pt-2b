@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "AllreadyDone";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Анкета заполнена</h2>
+<div>
+    Анкета с кодом <b>@Request.QueryString["code"]</b> уже заполнена.
+</div>
+<div>
+    <a href="/">Вернуться</a> на главную.
+</div>
+

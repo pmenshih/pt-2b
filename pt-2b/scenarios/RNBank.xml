@@ -1,0 +1,295 @@
+<Test name="Удовлетворенность работой" code="RNB" company="РН Банк">
+  <Questions>
+    <Question type="hard" position="1" text="Оцените справедливость утверждения, выбрав один вариант ответа:\n\nВ нашем Банке к сотрудникам относятся с уважением.">
+	  <Answers>
+		<Answer position="1">Да</Answer>
+		<Answer position="2">Скорее да</Answer>
+		<Answer position="3">Затрудняюсь ответить</Answer>
+		<Answer position="4">Скорее нет</Answer>
+		<Answer position="5">Нет</Answer>
+	  </Answers>
+    </Question>
+	<Question type="hard" position="2" text="Я могу открыто высказывать свое мнение о том, что мне нравится и не нравится.">
+	  <Answers>
+		<Answer position="1">Да</Answer>
+		<Answer position="2">Скорее да</Answer>
+		<Answer position="3">Затрудняюсь ответить</Answer>
+		<Answer position="4">Скорее нет</Answer>
+		<Answer position="5">Нет</Answer>
+	  </Answers>
+	</Question>
+	<Question type="hard" position="3" text="Мой руководитель внимателен к людям, умеет слушать и слышать.">
+	  <Answers>
+		<Answer position="1">Да</Answer>
+		<Answer position="2">Скорее да</Answer>
+		<Answer position="3">Затрудняюсь ответить</Answer>
+		<Answer position="4">Скорее нет</Answer>
+		<Answer position="5">Нет</Answer>
+	  </Answers>
+	</Question>
+	<Question type="hard" position="4" text="Отношения в нашем коллективе дружеские, людям нравится работать вместе.">
+	  <Answers>
+		<Answer position="1">Да</Answer>
+		<Answer position="2">Скорее да</Answer>
+		<Answer position="3">Затрудняюсь ответить</Answer>
+		<Answer position="4">Скорее нет</Answer>
+		<Answer position="5">Нет</Answer>
+	  </Answers>
+	</Question>
+	<Question type="hard" position="5" text="Большинство коллег в нашем Банке настроены позитивно.">
+    <Answers>
+		<Answer position="1">Да</Answer>
+		<Answer position="2">Скорее да</Answer>
+		<Answer position="3">Затрудняюсь ответить</Answer>
+		<Answer position="4">Скорее нет</Answer>
+		<Answer position="5">Нет</Answer>
+	  </Answers>	
+  </Question>
+	<Question type="hard" position="6" text="У нас принято говорить правду, ничего не скрывая.">
+	  <Answers>
+		<Answer position="1">Да</Answer>
+		<Answer position="2">Скорее да</Answer>
+		<Answer position="3">Затрудняюсь ответить</Answer>
+		<Answer position="4">Скорее нет</Answer>
+		<Answer position="5">Нет</Answer>
+	  </Answers>
+	</Question>
+	<Question type="hard" position="7" text="У нас в Банке каждый хорошо знает, что нужно делать, как и для чего.">
+	  <Answers>
+		<Answer position="1">Да</Answer>
+		<Answer position="2">Скорее да</Answer>
+		<Answer position="3">Затрудняюсь ответить</Answer>
+		<Answer position="4">Скорее нет</Answer>
+		<Answer position="5">Нет</Answer>
+	  </Answers>
+	</Question>
+	<Question type="hard" position="8" text="Принимая решения, у нас ориентируются на перспективу, даже если это труднее в исполнении.">
+	  <Answers>
+		<Answer position="1">Да</Answer>
+		<Answer position="2">Скорее да</Answer>
+		<Answer position="3">Затрудняюсь ответить</Answer>
+		<Answer position="4">Скорее нет</Answer>
+		<Answer position="5">Нет</Answer>
+	  </Answers>
+	</Question>
+	<Question type="hard" position="9" text="Я удовлетворен количеством и качеством инструкций от руководителя, четкостью постановки задач.">
+	  <Answers>
+		<Answer position="1">Да</Answer>
+		<Answer position="2">Скорее да</Answer>
+		<Answer position="3">Затрудняюсь ответить</Answer>
+		<Answer position="4">Скорее нет</Answer>
+		<Answer position="5">Нет</Answer>
+	  </Answers>
+	</Question>
+	<Question type="hard" position="10" text="У нас принято обосновывать и объяснять свои решения и действия.">
+	  <Answers>
+		<Answer position="1">Да</Answer>
+		<Answer position="2">Скорее да</Answer>
+		<Answer position="3">Затрудняюсь ответить</Answer>
+		<Answer position="4">Скорее нет</Answer>
+		<Answer position="5">Нет</Answer>
+	  </Answers>
+	</Question>
+	<Question type="hard" position="11" text="У меня есть понимание того, кто и чем занимается у нас в Банке.">
+	  <Answers>
+		<Answer position="1">Да</Answer>
+		<Answer position="2">Скорее да</Answer>
+		<Answer position="3">Затрудняюсь ответить</Answer>
+		<Answer position="4">Скорее нет</Answer>
+		<Answer position="5">Нет</Answer>
+	  </Answers>
+	</Question>
+	<Question type="hard" position="12" text="У нас ценят экспертизу и профессионализм. Тот, кто делится экспертизой, получает признание и уважение.">
+	  <Answers>
+		<Answer position="1">Да</Answer>
+		<Answer position="2">Скорее да</Answer>
+		<Answer position="3">Затрудняюсь ответить</Answer>
+		<Answer position="4">Скорее нет</Answer>
+		<Answer position="5">Нет</Answer>
+	  </Answers>
+  </Question>
+	<Question type="hard" position="13" text="В рамках рабочих проектов каждый менеджер делает все возможное, чтобы соблюдать договоренности и согласованные сроки.">
+	  <Answers>
+		<Answer position="1">Да</Answer>
+		<Answer position="2">Скорее да</Answer>
+		<Answer position="3">Затрудняюсь ответить</Answer>
+		<Answer position="4">Скорее нет</Answer>
+		<Answer position="5">Нет</Answer>
+	  </Answers>
+	</Question>
+	<Question type="hard" position="14" text="Слова руководителей не расходятся с делом.">
+	  <Answers>
+		<Answer position="1">Да</Answer>
+		<Answer position="2">Скорее да</Answer>
+		<Answer position="3">Затрудняюсь ответить</Answer>
+		<Answer position="4">Скорее нет</Answer>
+		<Answer position="5">Нет</Answer>
+	  </Answers>
+	</Question>
+	<Question type="hard" position="15" text="Я получаю справедливое вознаграждение за свою работу.">
+	  <Answers>
+		<Answer position="1">Да</Answer>
+		<Answer position="2">Скорее да</Answer>
+		<Answer position="3">Затрудняюсь ответить</Answer>
+		<Answer position="4">Скорее нет</Answer>
+		<Answer position="5">Нет</Answer>
+	  </Answers>
+	</Question>
+	<Question type="hard" position="16" text="Тот, кто хорошо работает, будет замечен и поощрен.">
+	  <Answers>
+		<Answer position="1">Да</Answer>
+		<Answer position="2">Скорее да</Answer>
+		<Answer position="3">Затрудняюсь ответить</Answer>
+		<Answer position="4">Скорее нет</Answer>
+		<Answer position="5">Нет</Answer>
+	  </Answers>
+	</Question>
+	<Question type="hard" position="17" text="У нас не говорят «почему я». С готовностью берут на себя ответственность, если нужно.">
+		<Answers>
+			<Answer position="1">Да</Answer>
+			<Answer position="2">Скорее да</Answer>
+			<Answer position="3">Затрудняюсь ответить</Answer>
+			<Answer position="4">Скорее нет</Answer>
+			<Answer position="5">Нет</Answer>
+	  </Answers>
+    </Question>
+	<Question type="hard" position="18" text="Сервису и удовлетворённости клиентов уделяется значительное внимание в Банке.">
+	  <Answers>
+		<Answer position="1">Да</Answer>
+		<Answer position="2">Скорее да</Answer>
+		<Answer position="3">Затрудняюсь ответить</Answer>
+		<Answer position="4">Скорее нет</Answer>
+		<Answer position="5">Нет</Answer>
+	  </Answers>
+	</Question>
+	<Question type="hard" position="19" text="В Банке заботятся о развитии сотрудников.">
+	  <Answers>
+		<Answer position="1">Да</Answer>
+		<Answer position="2">Скорее да</Answer>
+		<Answer position="3">Затрудняюсь ответить</Answer>
+		<Answer position="4">Скорее нет</Answer>
+		<Answer position="5">Нет</Answer>
+	  </Answers>
+	</Question>
+	<Question type="hard" position="20" text="Я обсуждаю перспективы своей карьеры и повышение квалификации с руководителем.">
+	  <Answers>
+		<Answer position="1">Да</Answer>
+		<Answer position="2">Скорее да</Answer>
+		<Answer position="3">Затрудняюсь ответить</Answer>
+		<Answer position="4">Скорее нет</Answer>
+		<Answer position="5">Нет</Answer>
+	  </Answers>
+	</Question>
+	<Question type="hard" position="21" text="Инициатива в Банке поощряется.">
+	  <Answers>
+		<Answer position="1">Да</Answer>
+		<Answer position="2">Скорее да</Answer>
+		<Answer position="3">Затрудняюсь ответить</Answer>
+		<Answer position="4">Скорее нет</Answer>
+		<Answer position="5">Нет</Answer>
+	  </Answers>
+	</Question>
+	<Question type="hard" position="22" text="Большинство моих коллег стараются решать проблему, а не искать виноватых.">
+	  <Answers>
+		<Answer position="1">Да</Answer>
+		<Answer position="2">Скорее да</Answer>
+		<Answer position="3">Затрудняюсь ответить</Answer>
+		<Answer position="4">Скорее нет</Answer>
+		<Answer position="5">Нет</Answer>
+	  </Answers>
+	</Question>
+	<Question type="hard" position="23" text="В нашем коллективе всегда готовы помочь, поддержать, поделиться знаниями.">
+	  <Answers>
+		<Answer position="1">Да</Answer>
+		<Answer position="2">Скорее да</Answer>
+		<Answer position="3">Затрудняюсь ответить</Answer>
+		<Answer position="4">Скорее нет</Answer>
+		<Answer position="5">Нет</Answer>
+	  </Answers>
+	</Question>
+	<Question type="hard" position="24" text="Банк старается внедрять инновации и быть в курсе новинок рынка.">
+	  <Answers>
+		<Answer position="1">Да</Answer>
+		<Answer position="2">Скорее да</Answer>
+		<Answer position="3">Затрудняюсь ответить</Answer>
+		<Answer position="4">Скорее нет</Answer>
+		<Answer position="5">Нет</Answer>
+	  </Answers>
+	</Question>
+	<Question type="hard" position="25" text="Я удовлетворен имиджем Компании и тем, как ее воспринимают клиенты.">
+		<Answers>
+		<Answer position="1">Да</Answer>
+		<Answer position="2">Скорее да</Answer>
+		<Answer position="3">Затрудняюсь ответить</Answer>
+		<Answer position="4">Скорее нет</Answer>
+		<Answer position="5">Нет</Answer>
+	  </Answers>
+	</Question>
+	<Question type="hard" position="26" text="Мне предоставляется достаточно свободы при решении конкретных задач.">
+	  <Answers>
+		<Answer position="1">Да</Answer>
+		<Answer position="2">Скорее да</Answer>
+		<Answer position="3">Затрудняюсь ответить</Answer>
+		<Answer position="4">Скорее нет</Answer>
+		<Answer position="5">Нет</Answer>
+	  </Answers>
+	</Question>
+	<Question type="hard" position="27" text="Мой руководитель демонстрирует ценности Банка своим поведением.">
+	  <Answers>
+		<Answer position="1">Да</Answer>
+		<Answer position="2">Скорее да</Answer>
+		<Answer position="3">Затрудняюсь ответить</Answer>
+		<Answer position="4">Скорее нет</Answer>
+		<Answer position="5">Нет</Answer>
+	  </Answers>
+	</Question>
+	<Question type="hard" position="28" text="Сервис/удовлетворенность клиентов — это важная часть бизнес–модели банка.">
+	  <Answers>
+		<Answer position="1">Да</Answer>
+		<Answer position="2">Скорее да</Answer>
+		<Answer position="3">Затрудняюсь ответить</Answer>
+		<Answer position="4">Скорее нет</Answer>
+		<Answer position="5">Нет</Answer>
+	  </Answers>
+	</Question>
+	<Question type="hard" position="29" text="Сотрудники доверяют друг другу и полагаются на экспертизу своих коллег.">
+	  <Answers>
+		<Answer position="1">Да</Answer>
+		<Answer position="2">Скорее да</Answer>
+		<Answer position="3">Затрудняюсь ответить</Answer>
+		<Answer position="4">Скорее нет</Answer>
+		<Answer position="5">Нет</Answer>
+	  </Answers>
+	</Question>
+	<Question type="hard" position="30" text="Я бы порекомендовал своим друзьям и знакомым устроиться на работу в наш Банк. (Оцените, пожалуйста, свою готовность рекомендовать по 10 бальной шкале от «10» – максимально готов, до «0» – не готов.)">
+	  <Answers>
+		<Answer position="1">10</Answer>
+		<Answer position="2">9</Answer>
+		<Answer position="3">8</Answer>
+		<Answer position="4">7</Answer>
+		<Answer position="5">6</Answer>
+		<Answer position="6">5</Answer>
+		<Answer position="7">4</Answer>
+		<Answer position="8">3</Answer>
+		<Answer position="9">2</Answer>
+		<Answer position="10">1</Answer>
+		<Answer position="11">0</Answer>
+	  </Answers>
+	</Question>
+  <Question type="text" position="31" text="Какие важные особенности помогают Банку добиваться успеха?">
+	</Question>
+	<Question type="text" position="32" text="Что Банку нужно улучшить/изменить, чтобы быть более эффективным и прибыльным?">
+	</Question>
+  <Question type="hard" position="33" text="Насколько на Ваш взгляд Видение Банка актуально и отвечает текущим приоритетам бизнеса?">
+	  <Answers>
+		<Answer position="1">Полностью отвечает</Answer>
+		<Answer position="2">Скорее отвечает</Answer>
+		<Answer position="3">Затрудняюсь ответить</Answer>
+		<Answer position="4" keyto="34">Скорее не отвечает</Answer>
+		<Answer position="5" keyto="34">Полностью не отвечает</Answer>
+	  </Answers>
+  </Question>
+  <Question type="text" position="34" isSecret="true" text="Что бы Вы предложили изменить в формулировке Видения Банка?">
+	</Question>
+  </Questions>
+</Test>

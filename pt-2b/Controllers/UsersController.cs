@@ -10,18 +10,18 @@ using pt_2b.Models;
 
 namespace pt_2b.Controllers
 {
-    public class OrganisationController : Controller
+    public class UsersController : Controller
     {
         private DataBase db = new DataBase();
 
-        // GET: Organisation
+        // GET: Users
         [Authorize(Roles = "admin")]
         public ActionResult Index()
         {
-            return View(db.Organisations.ToList());
+            return View(db.User.ToList());
         }
 
-        // GET: Organisation/Details/5
+        // GET: Users/Details/5
         [Authorize(Roles = "admin")]
         public ActionResult Details(int? id)
         {
@@ -29,40 +29,40 @@ namespace pt_2b.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Organisation organisation = db.Organisations.Find(id);
-            if (organisation == null)
+            User user = db.User.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(organisation);
+            return View(user);
         }
 
-        // GET: Organisation/Create
+        // GET: Users/Create
         [Authorize(Roles = "admin")]
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Organisation/Create
+        // POST: Users/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "admin")]
-        public ActionResult Create([Bind(Include = "id,name")] Organisation organisation)
+        public ActionResult Create([Bind(Include = "id,name,patronim,surname,email,sex")] User user)
         {
             if (ModelState.IsValid)
             {
-                db.Organisations.Add(organisation);
+                db.User.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(organisation);
+            return View(user);
         }
 
-        // GET: Organisation/Edit/5
+        // GET: Users/Edit/5
         [Authorize(Roles = "admin")]
         public ActionResult Edit(int? id)
         {
@@ -70,32 +70,32 @@ namespace pt_2b.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Organisation organisation = db.Organisations.Find(id);
-            if (organisation == null)
+            User user = db.User.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(organisation);
+            return View(user);
         }
 
-        // POST: Organisation/Edit/5
+        // POST: Users/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "admin")]
-        public ActionResult Edit([Bind(Include = "id,name")] Organisation organisation)
+        public ActionResult Edit([Bind(Include = "id,name,patronim,surname,email,sex")] User user)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(organisation).State = EntityState.Modified;
+                db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(organisation);
+            return View(user);
         }
 
-        // GET: Organisation/Delete/5
+        // GET: Users/Delete/5
         [Authorize(Roles = "admin")]
         public ActionResult Delete(int? id)
         {
@@ -103,22 +103,22 @@ namespace pt_2b.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Organisation organisation = db.Organisations.Find(id);
-            if (organisation == null)
+            User user = db.User.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(organisation);
+            return View(user);
         }
 
-        // POST: Organisation/Delete/5
+        // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "admin")]
         public ActionResult DeleteConfirmed(int id)
         {
-            Organisation organisation = db.Organisations.Find(id);
-            db.Organisations.Remove(organisation);
+            User user = db.User.Find(id);
+            db.User.Remove(user);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

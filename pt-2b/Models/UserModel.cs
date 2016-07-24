@@ -12,5 +12,6 @@ namespace pt_2b.Models
         public string patronim { get; set; }
         public string surname { get; set; }
         public string email { get; set; }
+        public int sex { get; set; }
     }
 }

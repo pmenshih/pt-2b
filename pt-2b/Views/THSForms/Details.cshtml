@@ -11,6 +11,15 @@
     DataBase db = new DataBase();
     string answered = db.THSUsers.Where(x => x.thsId == Model.id && x.answered == 1).Count().ToString();
     string total = db.THSUsers.Where(x => x.thsId == Model.id).Count().ToString();
+    var notCompleted = db.THSUsers.Where(x => x.thsId == Model.id && x.answered == 0).Join(db.User, t => t.userId, u => u.id, (t, u) => new
+    {
+        name = u.name
+        ,surname = u.surname
+        ,id = u.id
+        ,email = u.email
+        ,code = t.code
+        ,uIType = t.thsUType
+    });
 }
 <div>
     <h4>THSForm</h4>
@@ -39,11 +48,20 @@
         <dd>
             @answered из @total&nbsp;&nbsp;<a href="/thsforms/results?id=@Model.id">скачать результаты</a>
         </dd>
+        <dt>
+            Не заполнили
+        </dt>
 
+        <dd>
+            @foreach (var u in notCompleted)
+            {
+                <a href="/THSForms/SendEmail?id=@Model.id&userId=@u.id&uIType=@u.uIType">письмо</a> @(u.surname + " " + u.name)<br/>
+            }
+        </dd>
     </dl>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
-<a href="/THSForms/SendEmails?id=@Model.id">Разослать письма</a>
+<a href="/THSForms/SendEmail?id=@Model.id">Разослать письма</a>

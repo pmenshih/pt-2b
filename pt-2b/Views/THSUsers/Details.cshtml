@@ -1,0 +1,67 @@
+﻿@model pt_2b.Models.THSUser
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>THSUser</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.userId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.userId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.thsId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.thsId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.thsUType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.thsUType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.code)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.raw)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.raw)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.answered)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.answered)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

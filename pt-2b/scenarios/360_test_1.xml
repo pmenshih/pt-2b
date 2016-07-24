@@ -1,4 +1,4 @@
-<Test name="Оценка 360№1" code="360-1" username="org1" company="Тестовая организация">
+<Test name="Тестовая оценка 360" code="360-1" username="psycho" company="Психология и бизнес">
 	<Questions>
 		<Question type="hard" position="1" text="Уважаемый коллега!\n\nВы тестируете 360.\n\nМне нравится желтый цвет.">
 			<Answers>

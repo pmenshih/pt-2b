@@ -19,12 +19,14 @@ namespace pt_2b.Controllers
         private DataBase db = new DataBase();
 
         // GET: THSForms
+        [Authorize(Roles = "admin")]
         public ActionResult Index()
         {
             return View(db.THSForms.ToList());
         }
 
         // GET: THSForms/Details/5
+        [Authorize(Roles = "admin")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -40,6 +42,7 @@ namespace pt_2b.Controllers
         }
 
         // GET: THSForms/Create
+        [Authorize(Roles = "admin")]
         public ActionResult Create()
         {
             return View();
@@ -50,6 +53,7 @@ namespace pt_2b.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public ActionResult Create([Bind(Include = "id,name,organisationId")] THSForm tHSForm)
         {
             if (ModelState.IsValid)
@@ -63,6 +67,7 @@ namespace pt_2b.Controllers
         }
 
         // GET: THSForms/Edit/5
+        [Authorize(Roles = "admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -82,6 +87,7 @@ namespace pt_2b.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public ActionResult Edit([Bind(Include = "id,name,organisationId")] THSForm tHSForm)
         {
             if (ModelState.IsValid)
@@ -94,6 +100,7 @@ namespace pt_2b.Controllers
         }
 
         // GET: THSForms/Delete/5
+        [Authorize(Roles = "admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -109,6 +116,7 @@ namespace pt_2b.Controllers
         }
 
         // POST: THSForms/Delete/5
+        [Authorize(Roles = "admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -129,6 +137,11 @@ namespace pt_2b.Controllers
         }
 
         public ActionResult Start()
+        {
+            return View();
+        }
+
+        public ActionResult AllreadyDone()
         {
             return View();
         }
@@ -168,27 +181,29 @@ namespace pt_2b.Controllers
                 thsBox.form.questions[thsBox.currentQuestion].text = thsBox.form.questions[thsBox.currentQuestion].text.Replace("\\n", "<br/>");
 
                 //КОСТЫЛЬ!!!
-                //заменим @utype@ на тип связи и аболдим её
+                //заменим @utype@ на тип связи и заболдим её
+                //string query = "select * from  tu.code as code, u.email as email, u.name as name, u.patronim as patronim, u.surname as surname, tu.thsUType as utype from thsusers tu, users u where tu.thsid = " + id.ToString() + " and tu.userid=u.id and tu.answered=0";
+                //Organisation org = (Organisation)db.Database.SqlQuery<Organisation>(query).Single();
                 string uType = "";
                 switch (tu.thsUType)
                 {
                     case 1:
-                        uType = "<b>самого себя</b>, ";
+                        uType = "";
                         break;
                     case 2:
-                        uType = "вашего <b>коллеги</b>,";
+                        uType = "<b>коллеги</b>,";
                         break;
                     case 3:
-                        uType = "вашего <b>начальника</b>,";
+                        uType = "<b>руководителя</b>,";
                         break;
                     case 4:
-                        uType = "вашего <b>подчинённого</b>,";
+                        uType = "<b>подчинённого</b>,";
                         break;
                     case 5:
-                        uType = "вашего <b></b>,";
+                        uType = "<b>коллеги</b>,";
                         break;
                     case 6:
-                        uType = "вашего <b>партнёра</b>,";
+                        uType = "<b>коллеги</b>,";
                         break;
                 }
                 thsBox.form.questions[thsBox.currentQuestion].text = thsBox.form.questions[thsBox.currentQuestion].text.Replace("@utype@", uType);
@@ -199,6 +214,14 @@ namespace pt_2b.Controllers
 
             //если коробки с тестом до сих пор нет, нужно увести пользователя на страницу об ошибке
             if (thsBox == null) return Redirect("/");
+
+            //если анкета уже заполнена, то перенаправим пользователя
+            THSUser thsu = db.THSUsers.Where(t => t.code == thsBox.form.code).First();
+            if (thsu.answered == 1)
+            {
+                Session.Remove("thsBox");
+                return Redirect("/thsforms/allreadydone?code=" + thsu.code);
+            }
 
             //нажали кнопочку "Вперед"
             if (Request.Form["action"] == "next")
@@ -314,8 +337,6 @@ namespace pt_2b.Controllers
                 //подготавливаем и сохраняем результат в БД
                 string s = thsBox.form.SerializeToXmlString();
 
-                int thsuId = Int32.Parse(thsBox.form.username);
-                THSUser thsu = db.THSUsers.Where(t => t.id == thsuId).First();
                 thsu.raw = s;
                 thsu.answered = 1;
 
@@ -347,7 +368,7 @@ namespace pt_2b.Controllers
             string csv = "";
 
             //подсчитываем количество ответов и формируем нулевую строку файла
-            csv += ";t";
+            csv += ";t;n";
             foreach (Question q in form.questions)
             {
                 answersCount++;
@@ -360,6 +381,8 @@ namespace pt_2b.Controllers
             Encoding srcEnc = Encoding.UTF8;
             Encoding destEnc = Encoding.GetEncoding(1251);
 
+            string companyName = "";
+
             //перебираем ответы
             foreach (THSUser ta in db.THSUsers.Where(x => x.thsId == thsuId && x.answered == 1))
             {
@@ -367,7 +390,13 @@ namespace pt_2b.Controllers
                 csv += ta.id.ToString() + ";";
 
                 //тип оценщика
-                csv += ta.thsUType.ToString() + ";";
+                THSUserTypes uType = db.THSUserType.Where(x => x.id == ta.thsUType).Single();
+                csv += uType.name + ";";
+                //csv += ta.thsUType.ToString() + ";";
+
+                //Фамилия Имя оценщика
+                User user = db.User.Where(x => x.id == ta.userId).Single();
+                csv += user.surname + " " + user.name + ";";
 
                 //десериализуем тест (вместе с ответами)
                 Form tBoxa = form.DeserializeFromXmlString(ta.raw);
@@ -395,13 +424,19 @@ namespace pt_2b.Controllers
                 answersCount++;
             }
 
-            string filename = String.Format("360-{0}-{1}.csv", thsu.thsId.ToString(), answersCount.ToString()); ;
+            string filename = String.Format("360-{0}-{1}.csv", thsu.thsId.ToString(), answersCount.ToString());
             return File(destEnc.GetBytes(csv), "text/csv", filename);
         }
 
-        public ActionResult SendEmails(int id)
+        [Authorize(Roles = "admin")]
+        public ActionResult SendEmail(int id, int userId = 0, int uIType = 0)
         {
-            string query = "select tu.code as code, u.email as email, u.name as name, u.patronim as patronim, u.surname as surname, tu.thsUType as utype from thsusers tu, users u where tu.thsid = " + id.ToString() + " and tu.userid=u.id and tu.answered=0";
+            string query = "select tu.code as code, u.email as email, u.sex, u.name as name, u.patronim as patronim, u.surname as surname, tu.thsUType as utype from thsusers tu, users u where tu.thsid = " + id.ToString() + " and tu.userid=u.id and tu.answered=0";
+            if (userId != 0 && uIType != 0)
+            {
+                query = "select tu.code as code, u.email as email, u.sex, u.name as name, u.patronim as patronim, u.surname as surname, tu.thsUType as utype from thsusers tu, users u where tu.userId=u.id and tu.thsid = " + id.ToString() + " and tu.userid=" + userId.ToString() + " and tu.thsUType=" + uIType.ToString();
+            }
+
             var users = db.Database.SqlQuery<usrs>(query).ToList();
             foreach (var user in users)
             {
@@ -414,47 +449,81 @@ namespace pt_2b.Controllers
 
                 MailMessage mail = new MailMessage();
                 mail.IsBodyHtml = true;
-                mail.From = new MailAddress("office@psycho.ru", "Почтовый робот psycho.ru");
+                mail.From = new MailAddress("office@psycho.ru", "Центр оценки psycho.ru");
                 mail.To.Add(new MailAddress(user.email));
 
                 //КОСТЫЛЬ!!!
-                //заменим @utype@ на тип связи и аболдим её
+                //заменим @utype@ на тип связи и заболдим её
                 string uType = "";
+                THSForm thsForm = db.THSForms.Where(x => x.id == id).Single();
+                string uName = thsForm.targetName;
+                string strDear = "Уважаемый";
+                string strIam = "самого";
+                string strBoss = "подчинённого";
+                if (user.sex == 0)
+                {
+                    strDear = "Уважаемая";
+                    strIam = "самой";
+                    strBoss = "подчинённой";
+                }
+
                 switch (user.utype)
                 {
                     case 1:
-                        mail.Subject = "Оцените самого себя на test.psycho.ru";
-                        uType = "<b>самого себя</b>";
+                        mail.Subject = "Оцените себя";
+                        uType = "<b>" + strIam + " себя</b>";
                         break;
                     case 2:
-                        mail.Subject = "Оцените коллегу на test.psycho.ru";
-                        uType = "вашего <b>коллегу</b>";
+                        uType = /*"<b>коллеги</b>," + */uName;
+                        mail.Subject = "Оценка коллеги " + uType;
                         break;
                     case 3:
-                        mail.Subject = "Оцените начальника на test.psycho.ru";
-                        uType = "вашего <b>начальника</b>";
+                        uType = "<b>руководителя</b>," + uName;
+                        mail.Subject = "Оценка руководителя " + uName;
                         break;
                     case 4:
-                        mail.Subject = "Оцените подчинённого на test.psycho.ru";
-                        uType = "вашего <b>подчинённого</b>";
+                        uType = "<b>" + strBoss + "</b>," + uName;
+                        mail.Subject = "Оценка " + strBoss + " " + uName;
                         break;
                     case 5:
-                        mail.Subject = "Оцените  на test.psycho.ru";
-                        uType = "вашего <b></b>";
+                        mail.Subject = "Оценка коллеги " + uName;
+                        uType = /*"<b>коллеги</b>," + */uName;
                         break;
                     case 6:
-                        mail.Subject = "Оцените партнёра на test.psycho.ru";
-                        uType = "вашего <b>партнёра</b>";
+                        mail.Subject = "Оценка коллеги " + uName;
+                        uType = /*"<b>коллеги</b>," + */uName;
                         break;
                 }
 
-                
-                mail.Body = "Здравствуйте!<br/><br/>Вы получили это письмо, потому как ваш адрес указан в списке анкетируемых.<br/>Вам предлагается оценить " + uType + ".<br/><a href=\"http://test.psycho.ru/THSForms/Filling?code=" + user.code + "\">Для заполнения анкеты перейдите по ссылке</a>.<br/>Ваш код: <b>" + user.code + "</b><br/><br/>С уважением, команда psycho.ru.";
-                
+                string targetName = uName;
+
+                try
+                {
+                    targetName = uName.Split(' ')[1];
+                }
+                catch (Exception) { }
+
+                string mText = strDear + " коллега!<br/><br/>" +
+                            "Просим Вас оценить управленческие качества " + uType + ".<br/> " +
+                            "Данные, которые будут получены, имеют важное значение для совершенствования " + targetName + " как руководителя, помогут определить сильные стороны и качества, которые необходимо развивать. Результаты оценки будут сведены в общий документ без указания, кто давал оценку.<br/><br/> " +
+                            "<a href=\"http://test.psycho.ru/THSForms/Filling?code=" + user.code + "\">Для заполнения анкеты перейдите по ссылке</a>.<br/><br/>Если у Вас возникнут  вопросы, пишите нам на <a href=\"mailto:office@psycho.ru\">office@psycho.ru</a>.<br/>С уважением, команда psycho.ru.";
+
+                if (user.utype == 5)
+                {
+                    Organisation org = db.Organisations.Where(x => x.id == thsForm.organisationId).First();
+                    mText = strDear + " " + user.name + "!<br/><br/>" +
+                            "В настоящее время в компании «" + org.name + "» реализуется проект «Ассессмент сотрудников компании».<br/>" +
+                            "Просим Вас принять участие в реализации данного проекта в части «Развитие управленческих качеств менеджеров компании».<br/><br/>" +
+                            "Вам предстоить оценить управленческие качества " + uType + ".<br/> " +
+                            "Данные, которые будут получены, имеют важное значение для совершенствования " + targetName + " как руководителя, помогут определить сильные стороны и качества, которые необходимо развивать. Результаты оценки будут сведены в общий документ без указания, кто давал оценку.<br/><br/> " +
+                            "<a href=\"http://test.psycho.ru/THSForms/Filling?code=" + user.code + "\">Для заполнения анкеты перейдите по ссылке</a>.<br/><br/>Если у Вас возникнут  вопросы, пишите нам на <a href=\"mailto:office@psycho.ru\">office@psycho.ru</a>.<br/>С уважением, команда psycho.ru.";
+                }
+
+                mail.Body = mText;
 
                 smtpClient.Send(mail);
             }
-            
+
 
             return Redirect("/THSForms/Details/" + id.ToString());
         }
@@ -464,6 +533,7 @@ namespace pt_2b.Controllers
     {
         public string code { get; set; }
         public string email { get; set; }
+        public int sex { get; set; }
         public string name { get; set; }
         public string patronim { get; set; }
         public string surname { get; set; }

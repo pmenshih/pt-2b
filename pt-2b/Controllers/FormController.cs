@@ -16,13 +16,46 @@ namespace pt_2b.Controllers
         
         public ActionResult Index()
         {
-            return View();
+            //костыль!
+            ViewData["hideMenu"] = "hidden";
+
+            string code = Request.Form["code"];
+
+            if (Request.Form["action"] == "next")
+            {
+                if (db.Forms.Where(t => t.code == code).Count() > 0)
+                {
+                    Session.Remove("CheckMessage");
+                    return Redirect("/form/filling?code=" + code);
+                }
+                //КОСТЫЛЬ!!!
+                //вход для 360
+                else if (db.THSUsers.Where(t => t.code == code && t.answered == 0).Count() > 0)
+                {
+                    return Redirect("/thsforms/filling?code=" + code);
+                }
+                else if (db.THSUsers.Where(t => t.code == code && t.answered == 1).Count() > 0)
+                {
+                    Session.Remove("CheckMessage");
+                    Session.Add("CheckMessage", String.Format("Вы уже заполнили эту анкету.", code));
+                    return View();
+                }
+                else
+                {
+                    Session.Remove("CheckMessage");
+                    Session.Add("CheckMessage", String.Format("Анкеты с кодовым словом «{0}» не найдено.", code));
+                    return View();
+                }
+            }
+            else return View();
         }
         
-        public ActionResult CodeCheck(string code)
+        public ActionResult CodeCheck()
         {
             //костыль!
             ViewData["hideMenu"] = "hidden";
+
+            string code = this.Request.QueryString["code"];
 
             if (db.Forms.Where(t => t.code == code).Count() > 0)
             {
@@ -53,12 +86,14 @@ namespace pt_2b.Controllers
                 string code = this.Request.QueryString["code"];
                 tBox.form = (Form)db.Forms.Where(t => t.code == code).First();
                 tBox.form = tBox.form.DeserializeFromXmlString(tBox.form.raw);
+
                 //заменим \n на <br/>
                 tBox.form.questions[tBox.currentQuestion].text = tBox.form.questions[tBox.currentQuestion].text.Replace("\\n", "<br/>");
+
                 Session.Add("tBox", tBox);
                 return View(tBox);
             }
-            
+
             //если коробки с тестом до сих пор нет, нужно увести пользователя на страницу об ошибке
             if (tBox == null) return Redirect("/");
 
@@ -170,8 +205,10 @@ namespace pt_2b.Controllers
             if (tBox.currentQuestion > 0) tBox.disableBack = "";
             else tBox.disableBack = "disabled";
 
+
+
             //тест закончился
-            if(tBox.form.questions.Count() < tBox.currentQuestion + 1)
+            if (tBox.form.questions.Count() < tBox.currentQuestion + 1)
             {
                 //подготавливаем и сохраняем результат в БД
                 string s = tBox.form.SerializeToXmlString();
@@ -186,6 +223,11 @@ namespace pt_2b.Controllers
                 Session.Remove("tBox");
                 //показываем заключительный экран
                 return View("Finish");
+            }
+            else
+            {
+                //заменим \n на <br/>
+                tBox.form.questions[tBox.currentQuestion].text = tBox.form.questions[tBox.currentQuestion].text.Replace("\\n", "<br/>");
             }
 
             //сохраним результат в сессию
