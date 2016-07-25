@@ -26,6 +26,9 @@
     @Html.ActionLink("Back to List", "Index")
 </p>
 <div>
+    <a href="/organisation/organisationusers?orgId=@Model.id">Пользователи организации</a>
+</div>
+<div>
 @using pt_2b.Models;
 @{
     DataBase db = new DataBase();

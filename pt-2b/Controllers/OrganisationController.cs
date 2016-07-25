@@ -111,8 +111,7 @@ namespace pt_2b.Controllers
             return View(organisation);
         }
 
-        // POST: Organisation/Delete/5
-        [HttpPost, ActionName("Delete")]
+        // POST: Organisation/Delete/5[HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "admin")]
         public ActionResult DeleteConfirmed(int id)
@@ -130,6 +129,22 @@ namespace pt_2b.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        // GET: Users
+        [Authorize(Roles = "admin")]
+        public ActionResult OrganisationUsers()
+        {
+            int orgId = Int32.Parse(Request.QueryString["orgId"]);
+            Organisation org = db.Organisations.Where(o => o.id == orgId).Single();
+            ViewData.Add("org", org);
+
+            string query = @"SELECT *
+                            FROM Users u
+                            WHERE u.id IN (SELECT uo.userId FROM UsersOrganisations uo WHERE uo.organisationId = @orgId)
+                            ORDER BY u.surname, u.name, u.patronim ASC".Replace("@orgId", Request.QueryString["orgId"]);
+            
+            return View(db.Database.SqlQuery<User>(query).ToList());
         }
     }
 }

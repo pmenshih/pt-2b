@@ -41,6 +41,13 @@ namespace pt_2b.Controllers
         [Authorize(Roles = "admin")]
         public ActionResult Create()
         {
+            if (Request.QueryString["orgId"] != null)
+            {
+                int orgId = Int32.Parse(Request.QueryString["orgId"]);
+                Organisation org = db.Organisations.Where(o => o.id == orgId).Single();
+                ViewData.Add("org", org);
+            }
+            
             return View();
         }
 
@@ -56,7 +63,23 @@ namespace pt_2b.Controllers
             {
                 db.User.Add(user);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                if (Request.QueryString["orgId"] != null)
+                {
+                    UsersOrganisations uo = new UsersOrganisations();
+                    uo.dateCreate = DateTime.Now;
+                    uo.organisationId = Int32.Parse(Request.QueryString["orgId"]);
+                    uo.userId = user.id;
+                    db.UsersOrganisations.Add(uo);
+                    db.SaveChanges();
+                    return Redirect("/organisation/organisationusers?orgId=" + Request.QueryString["orgId"]);
+
+                    /*
+                    int orgId = Int32.Parse(Request.QueryString["orgId"]);
+                    Organisation org = db.Organisations.Where(o => o.id == orgId).Single();
+                    ViewData.Add("org", org);*/
+                }
+                else return RedirectToAction("Index");
             }
 
             return View(user);
@@ -90,7 +113,11 @@ namespace pt_2b.Controllers
             {
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                if (Request.QueryString["orgId"] != null)
+                {
+                    return Redirect("/organisation/organisationusers?orgId=" + Request.QueryString["orgId"]);
+                }
+                else return RedirectToAction("Index");
             }
             return View(user);
         }
@@ -120,7 +147,11 @@ namespace pt_2b.Controllers
             User user = db.User.Find(id);
             db.User.Remove(user);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            if (Request.QueryString["orgId"] != null)
+            {
+                return Redirect("/organisation/organisationusers?orgId=" + Request.QueryString["orgId"]);
+            }
+            else return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

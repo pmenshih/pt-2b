@@ -18,6 +18,7 @@ namespace pt_2b.Models
 
         public DbSet<THSUser> THSUsers { get; set; }
         public System.Data.Entity.DbSet<pt_2b.Models.Organisation> Organisations { get; set; }
+        public System.Data.Entity.DbSet<pt_2b.Models.UsersOrganisations> UsersOrganisations { get; set; }
         public System.Data.Entity.DbSet<pt_2b.Models.THSForm> THSForms { get; set; }
     }
 }

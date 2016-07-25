@@ -303,6 +303,9 @@
     <Content Include="Views\THSUsers\Details.cshtml" />
     <Content Include="Views\THSUsers\Edit.cshtml" />
     <Content Include="Views\THSUsers\Index.cshtml" />
+    <Content Include="Views\Organisation\Edit.cshtml" />
+    <Content Include="Views\Organisation\Delete.cshtml" />
+    <Content Include="Views\Organisation\OrganisationUsers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

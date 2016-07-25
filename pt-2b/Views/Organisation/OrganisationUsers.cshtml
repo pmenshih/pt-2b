@@ -1,0 +1,59 @@
+﻿@model IEnumerable<pt_2b.Models.User>
+
+@{
+    pt_2b.Models.Organisation org = (pt_2b.Models.Organisation)ViewData["org"];
+
+    ViewBag.Title = org.name;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>«<a href="/organisation/details/@org.id">@org.name</a>» — пользователи</h2>
+
+<p>
+    <a href="/users/Create?orgId=@org.id">Добавить пользователя</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.patronim)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.surname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sex)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.patronim)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.surname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.sex)
+        </td>
+        <td>
+            <a href="/users/Edit/@item.id?orgId=@org.id">Edit</a> |
+            <a href="/users/Delete/@item.id?orgId=@org.id">Delete</a>
+        </td>
+    </tr>
+}
+
+</table>
