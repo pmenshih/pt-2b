@@ -35,6 +35,22 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.targetName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.targetName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.targetName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.defScenario, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.defScenario, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.defScenario, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
@@ -43,7 +59,14 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @if (Request.QueryString["orgId"] != null)
+    {
+        <a href="/THSForms/Details/@Model.id?orgId=@Request.QueryString["orgId"]">Вернуться</a>
+    }
+    else
+    {
+        @Html.ActionLink("Back to List", "Index")
+    }
 </div>
 
 @section Scripts {

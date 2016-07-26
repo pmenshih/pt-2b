@@ -1,11 +1,11 @@
 ﻿@model pt_2b.Models.THSForm
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Model.name;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>@Model.name</h2>
 @using pt_2b.Models;
 @{
     DataBase db = new DataBase();
@@ -20,9 +20,19 @@
         ,code = t.code
         ,uIType = t.thsUType
     });
+    var allUsers = db.THSUsers.Where(x => x.thsId == Model.id).Join(db.User, t => t.userId, u => u.id, (t, u) => new
+    {
+        name = u.name
+        ,surname = u.surname
+        ,id = u.id
+        ,email = u.email
+        ,code = t.code
+        ,uIType = t.thsUType
+        ,answered = t.answered
+        ,tID = t.id
+    }).OrderBy(t => t.surname).ThenBy(t => t.name);
 }
 <div>
-    <h4>THSForm</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -61,7 +71,38 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @if (Request.QueryString["orgId"] != null)
+    {
+        <a href="/THSForms/Edit/@Model.id?orgId=@Request.QueryString["orgId"]">Редактировать</a>
+        @Html.Raw("|")
+        <a href="/organisation/Details/@Request.QueryString["orgId"]">Вернуться</a>
+    }
+    else
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.id })
+        @Html.Raw("|") @Html.ActionLink("Back to List", "Index")
+    }
 </p>
+<div>
+    <h4>Анкетирумые (@allUsers.Count().ToString()) <a href="/thsforms/THSUsersAdd?thsId=@Model.id&orgId=@Request.QueryString["orgId"]">добавить</a></h4>
+    <table class="table">
+    @foreach (var u in allUsers)
+    {
+        <tr>
+            <td>
+                @(u.surname + " " + u.name)
+            </td>
+            <td>
+                @db.THSUserType.Where(x => x.id == u.uIType).Select(x => x.name).Single()
+            </td>
+            <td>
+                @if (u.answered != 1)
+                {
+                    <a href="/thsusers/Delete/@u.tID?thsId=@Model.id&orgId=@Request.QueryString["orgId"]">Удалить</a>
+                }
+            </td>
+        </tr>
+    }
+    </table>
+</div>
 <a href="/THSForms/SendEmail?id=@Model.id">Разослать письма</a>

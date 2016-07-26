@@ -68,5 +68,12 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @if (Request.QueryString["orgId"] != null)
+    {
+        <a href="/organisation/organisationusers?orgId=@Request.QueryString["orgId"]">Вернуться</a>
+    }
+    else
+    {
+        @Html.ActionLink("Back to List", "Index")
+    }
 </div>

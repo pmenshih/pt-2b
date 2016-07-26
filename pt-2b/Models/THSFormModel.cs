@@ -11,6 +11,7 @@ namespace pt_2b.Models
         public string name { get; set; }
         public int? organisationId { get; set; }
         public string targetName { get; set; }
+        public string defScenario { get; set; }
     }
 
     public class THSUser

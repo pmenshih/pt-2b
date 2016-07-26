@@ -216,6 +216,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="scenarios\360_test_1.xml" />
     <Content Include="scenarios\test_1.xml" />
+    <Content Include="Scripts\bootstrap-3-typeahead.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\bootstrap.min.css.map" />
@@ -306,6 +307,7 @@
     <Content Include="Views\Organisation\Edit.cshtml" />
     <Content Include="Views\Organisation\Delete.cshtml" />
     <Content Include="Views\Organisation\OrganisationUsers.cshtml" />
+    <Content Include="Views\THSForms\THSUsersAdd.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

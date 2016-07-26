@@ -60,7 +60,12 @@ namespace pt_2b.Controllers
             {
                 db.THSForms.Add(tHSForm);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                if (Request.QueryString["orgId"] != null)
+                {
+                    return Redirect("/organisation/Details/" + Request.QueryString["orgId"]);
+                }
+                else return RedirectToAction("Index");
             }
 
             return View(tHSForm);
@@ -88,13 +93,17 @@ namespace pt_2b.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "admin")]
-        public ActionResult Edit([Bind(Include = "id,name,organisationId")] THSForm tHSForm)
+        public ActionResult Edit([Bind(Include = "id,name,organisationId,targetName,defScenario")] THSForm tHSForm)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(tHSForm).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                if (Request.QueryString["orgId"] != null)
+                {
+                    return Redirect("/THSForms/Details/" + tHSForm.id.ToString() + "?orgId=" + Request.QueryString["orgId"]);
+                }
+                else return RedirectToAction("Index");
             }
             return View(tHSForm);
         }
@@ -527,6 +536,66 @@ namespace pt_2b.Controllers
 
             return Redirect("/THSForms/Details/" + id.ToString());
         }
+
+        public string GenerateCode()
+        {
+            //генерация уникального кода
+            string chars = "1234567890QWERTYUIOPASDFGHJKLZXCVBNM";
+            string code = "ths";
+            Random rnd = new Random();
+            for (int i = 0; i < 5; i++)
+            {
+                int next = rnd.Next(0, 35);
+                code += chars.Substring(next, 1);
+            }
+
+            return code;
+        }
+
+        [Authorize(Roles = "admin")]
+        public ActionResult THSUsersAdd()
+        {
+            if (Request.Form["action"] == "save")
+            {
+                THSUser user = new THSUser();
+                user.answered = 0;
+                user.raw = Request.Form["raw"];
+                user.thsId = Int32.Parse(Request.QueryString["thsId"]);
+                user.thsUType = Int32.Parse(Request.Form["thsUType"]);
+
+                string userEmail = Request.Form["userName"].ToString().Split(':')[1].TrimStart(' ');
+                user.userId = db.User.Where(x => x.email == userEmail).Select(x => x.id).Single();
+
+                do
+                {
+                    user.code = GenerateCode();
+                }
+                while (db.THSUsers.Where(x => x.code == user.code).Count() != 0);
+
+                if (Request.Form["thsUId"] != null)
+                {
+                    user.id = Int32.Parse(Request.Form["thsUId"]);
+
+                    db.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                }
+                else
+                {
+                    db.THSUsers.Add(user);
+                }
+
+                db.SaveChanges();
+
+                return Redirect("/THSForms/Details/" + Request.QueryString["thsId"] + "?orgId=" + Request.QueryString["orgId"]);
+            }
+            else if (Request.QueryString["thsUId"] != null)
+            {
+                int uid = Int32.Parse(Request.QueryString["thsUId"]);
+                int thsId = Int32.Parse(Request.QueryString["thsId"]);
+                THSUser tu = db.THSUsers.Where(x => x.thsId == thsId && x.userId == uid).Single();
+                return View();
+            }
+            else return View();
+        }
     }
 
     public class usrs
@@ -539,4 +608,6 @@ namespace pt_2b.Controllers
         public string surname { get; set; }
         public int utype { get; set; }
     }
+
+    
 }

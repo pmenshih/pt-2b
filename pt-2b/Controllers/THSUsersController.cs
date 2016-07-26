@@ -120,7 +120,11 @@ namespace pt_2b.Controllers
             THSUser tHSUser = db.THSUsers.Find(id);
             db.THSUsers.Remove(tHSUser);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            if (Request.QueryString["thsId"] != null && Request.QueryString["orgId"] != null)
+            {
+                return Redirect("/THSForms/Details/" + Request.QueryString["thsId"] + "?orgId=" + Request.QueryString["orgId"]);
+            }
+            else return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

@@ -59,7 +59,14 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            @if (Request.QueryString["orgId"] != null)
+            {
+                <a href="/organisation/organisationusers?orgId=@Request.QueryString["orgId"]">Вернуться</a>
+            }
+            else
+            {
+                @Html.ActionLink("Back to List", "Index")
+            }
         </div>
     }
 </div>

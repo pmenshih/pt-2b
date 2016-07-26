@@ -1,0 +1,89 @@
+﻿@model pt_2b.Models.THSUser
+
+@{
+    ViewBag.Title = "THSUsersAdd";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    pt_2b.Models.DataBase db = new pt_2b.Models.DataBase();
+    int thsId = Int32.Parse(Request.QueryString["thsId"]);
+    pt_2b.Models.THSForm form = db.THSForms.Where(x => x.id == thsId).Single();
+    string query = @"SELECT * FROM 
+	                    Users u
+	                    ,UsersOrganisations uo 
+                    WHERE u.id = uo.userId
+	                    AND uo.organisationId = " + Request.QueryString["orgId"];
+    var users = db.Database.SqlQuery<pt_2b.Models.User>(query);
+    string usersList = "'[";
+    foreach (var user in users)
+    {
+        usersList += "\"" + user.surname + " " + user.name + " : " + user.email + "\",";
+    }
+    usersList = usersList.TrimEnd(',') + "]'";
+}
+
+<h2>THSUsersAdd</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.userId, "Фамилия и имя", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input name="userName" class="form-control text-box single-line" type="text" data-provide="typeahead" data-items="10" data-source=@Html.Raw(usersList)>
+                @Html.ValidationMessageFor(model => model.userId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.thsUType, "Тип актора", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="hidden" name="thsUType" />
+                <div class="dropdown">
+                    <button class="btn form-control btn-default dropdown-toggle" style="text-align: left;" type="button" id="thsUTypeBtn" name="thsUTypeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        выберите
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" id="ddm" aria-labelledby="thsUTypeBtn">
+                        @foreach (pt_2b.Models.THSUserTypes ut in db.THSUserType.ToList())
+                        {
+                            <li><a href="#" data-value="@ut.id">@ut.name</a></li>
+                        }
+                    </ul>
+                </div>
+                @Html.ValidationMessageFor(model => model.thsUType, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.raw, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.raw, new { htmlAttributes = new { @class = "form-control", @name = "raw", @Value = form.defScenario } })
+                @Html.ValidationMessageFor(model => model.raw, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" name="action" value="save" class="btn btn-default">Сохранить</button>
+            </div>
+        </div>
+    </div>
+}
+
+<a href="/THSForms/Details/@Request.QueryString["thsId"]?orgId=@Request.QueryString["orgId"]">Вернуться</a>
+
+@section Scripts {
+    <script src="~/scripts/tinymce/tinymce.min.js"></script>
+    <script type="text/javascript">
+            $(function () {
+                $(".dropdown-menu").on('click', 'li a', function () {
+                    $("#thsUTypeBtn:first-child").text($(this).text());
+                    $("#thsUTypeBtn:first-child").val($(this).text());
+                    $("input[name=thsUType]").val($(this).data("value"));
+                });
+            });
+    </script>
+}

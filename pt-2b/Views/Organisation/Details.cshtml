@@ -1,14 +1,13 @@
 ﻿@model pt_2b.Models.Organisation
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Model.name;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>«@Model.name»</h2>
 
 <div>
-    <h4>Organisation</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -33,11 +32,11 @@
 @{
     DataBase db = new DataBase();
 }
-    <h4>Оценки 360</h4>
+    <h4>Оценки 360 <a href="/thsforms/Create?orgId=@Model.id">добавить</a></h4>
     @foreach (THSForm item in db.THSForms.Where(m => m.organisationId == Model.id))
     {
         <div>
-            <a href="/THSForms/Details/@item.id">@item.name</a>
+            <a href="/THSForms/Details/@item.id?orgId=@Model.id">@item.name</a>
         </div>
     }
 </div>

@@ -27,6 +27,7 @@ namespace pt_2b
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
+                      "~/Scripts/bootstrap-3-typeahead.min.js",
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/bundles/css").Include(
