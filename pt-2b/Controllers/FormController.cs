@@ -17,6 +17,7 @@ namespace pt_2b.Controllers
         public ActionResult Index()
         {
             //костыль!
+            //убирание полоски меню, чтобы не пугать анонимных пользователей
             ViewData["hideMenu"] = "hidden";
 
             string code = Request.Form["code"];
@@ -34,12 +35,14 @@ namespace pt_2b.Controllers
                 {
                     return Redirect("/thsforms/filling?code=" + code);
                 }
+                //если 360 по этому коду уже заполнена, то перепройти её нельзя
                 else if (db.THSUsers.Where(t => t.code == code && t.answered == 1).Count() > 0)
                 {
                     Session.Remove("CheckMessage");
                     Session.Add("CheckMessage", String.Format("Вы уже заполнили эту анкету.", code));
                     return View();
                 }
+                //не найдено ни анкеты, ни 360 для указанного кода
                 else
                 {
                     Session.Remove("CheckMessage");
@@ -48,31 +51,6 @@ namespace pt_2b.Controllers
                 }
             }
             else return View();
-        }
-        
-        public ActionResult CodeCheck()
-        {
-            //костыль!
-            ViewData["hideMenu"] = "hidden";
-
-            string code = this.Request.QueryString["code"];
-
-            if (db.Forms.Where(t => t.code == code).Count() > 0)
-            {
-                return JavaScript("window.location = '/form/filling?code=" + code + "'");
-            }
-            //КОСТЫЛЬ!!!
-            //вход для 360
-            else if (db.THSUsers.Where(t => t.code == code && t.answered == 0).Count() > 0)
-            {
-                return JavaScript("window.location = '/thsforms/filling?code=" + code + "'");
-            }
-            else if (db.THSUsers.Where(t => t.code == code && t.answered == 1).Count() > 0)
-            {
-                return PartialView("_ViewErrorMessage", new Models.ViewMessage { message = String.Format("Вы уже заполнили эту анкету.", code) });
-            }
-            else
-                return PartialView("_ViewErrorMessage", new Models.ViewMessage { message = String.Format("Анкеты с кодовым словом «{0}» не найдено.", code) });
         }
 
         public ActionResult Filling()
@@ -204,9 +182,7 @@ namespace pt_2b.Controllers
             //проверим доступность кнопки "Назад"
             if (tBox.currentQuestion > 0) tBox.disableBack = "";
             else tBox.disableBack = "disabled";
-
-
-
+            
             //тест закончился
             if (tBox.form.questions.Count() < tBox.currentQuestion + 1)
             {

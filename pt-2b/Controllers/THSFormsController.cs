@@ -17,14 +17,7 @@ namespace pt_2b.Controllers
     public class THSFormsController : Controller
     {
         private DataBase db = new DataBase();
-
-        // GET: THSForms
-        [Authorize(Roles = "admin")]
-        public ActionResult Index()
-        {
-            return View(db.THSForms.ToList());
-        }
-
+        
         // GET: THSForms/Details/5
         [Authorize(Roles = "admin")]
         public ActionResult Details(int? id)
@@ -54,7 +47,7 @@ namespace pt_2b.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "admin")]
-        public ActionResult Create([Bind(Include = "id,name,organisationId")] THSForm tHSForm)
+        public ActionResult Create([Bind(Include = "id,name,organisationId,targetName,defScenario")] THSForm tHSForm)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +83,7 @@ namespace pt_2b.Controllers
         // POST: THSForms/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost, ValidateInput(false)]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "admin")]
         public ActionResult Edit([Bind(Include = "id,name,organisationId,targetName,defScenario")] THSForm tHSForm)
@@ -107,35 +100,7 @@ namespace pt_2b.Controllers
             }
             return View(tHSForm);
         }
-
-        // GET: THSForms/Delete/5
-        [Authorize(Roles = "admin")]
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            THSForm tHSForm = db.THSForms.Find(id);
-            if (tHSForm == null)
-            {
-                return HttpNotFound();
-            }
-            return View(tHSForm);
-        }
-
-        // POST: THSForms/Delete/5
-        [Authorize(Roles = "admin")]
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            THSForm tHSForm = db.THSForms.Find(id);
-            db.THSForms.Remove(tHSForm);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -144,31 +109,12 @@ namespace pt_2b.Controllers
             }
             base.Dispose(disposing);
         }
-
-        public ActionResult Start()
-        {
-            return View();
-        }
-
+        
         public ActionResult AllreadyDone()
         {
             return View();
         }
-
-        public ActionResult CodeCheck(string code)
-        {
-            if (db.THSUsers.Where(t => t.code == code && t.answered == 0).Count() > 0)
-            {
-                return JavaScript("window.location = '/thsforms/filling?code=" + code + "'");
-            }
-            else if (db.THSUsers.Where(t => t.code == code && t.answered == 1).Count() > 0)
-            {
-                return PartialView("_ViewErrorMessage", new Models.ViewMessage { message = String.Format("Вы уже заполнили эту анкету.", code) });
-            }
-            else
-                return PartialView("_ViewErrorMessage", new Models.ViewMessage { message = String.Format("Анкеты с кодом «{0}» не найдено.", code) });
-        }
-
+        
         public ActionResult Filling()
         {
             //попробуем загрузить тест через сессию
@@ -449,6 +395,8 @@ namespace pt_2b.Controllers
             var users = db.Database.SqlQuery<usrs>(query).ToList();
             foreach (var user in users)
             {
+                //Отправка письма через Google
+                /*
                 //SmtpClient smtpClient = new SmtpClient(WebConfigurationManager.AppSettings["siteMailHost"], Int32.Parse(WebConfigurationManager.AppSettings["siteMailPort"]));
                 SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
                 smtpClient.EnableSsl = true;
@@ -459,6 +407,20 @@ namespace pt_2b.Controllers
                 MailMessage mail = new MailMessage();
                 mail.IsBodyHtml = true;
                 mail.From = new MailAddress("office@psycho.ru", "Центр оценки psycho.ru");
+                mail.To.Add(new MailAddress(user.email));
+                */
+
+                //Отправка письма через Яндекс
+                //SmtpClient smtpClient = new SmtpClient(WebConfigurationManager.AppSettings["siteMailHost"], Int32.Parse(WebConfigurationManager.AppSettings["siteMailPort"]));
+                SmtpClient smtpClient = new SmtpClient("smtp.yandex.ru", 587);
+                smtpClient.EnableSsl = true;
+                smtpClient.UseDefaultCredentials = false;
+                smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtpClient.Credentials = new System.Net.NetworkCredential("robot@psycho.ru", "123456qW");
+
+                MailMessage mail = new MailMessage();
+                mail.IsBodyHtml = true;
+                mail.From = new MailAddress("robot@psycho.ru", "Центр оценки psycho.ru");
                 mail.To.Add(new MailAddress(user.email));
 
                 //КОСТЫЛЬ!!!
@@ -487,11 +449,11 @@ namespace pt_2b.Controllers
                         mail.Subject = "Оценка коллеги " + uType;
                         break;
                     case 3:
-                        uType = "<b>руководителя</b>," + uName;
+                        uType = "<b>руководителя</b>, " + uName;
                         mail.Subject = "Оценка руководителя " + uName;
                         break;
                     case 4:
-                        uType = "<b>" + strBoss + "</b>," + uName;
+                        uType = "<b>" + strBoss + "</b>, " + uName;
                         mail.Subject = "Оценка " + strBoss + " " + uName;
                         break;
                     case 5:
@@ -534,7 +496,7 @@ namespace pt_2b.Controllers
             }
 
 
-            return Redirect("/THSForms/Details/" + id.ToString());
+            return Redirect("/THSForms/Details/" + id.ToString() + "?orgId=" + Request.QueryString["orgId"]);
         }
 
         public string GenerateCode()
@@ -559,7 +521,7 @@ namespace pt_2b.Controllers
             {
                 THSUser user = new THSUser();
                 user.answered = 0;
-                user.raw = Request.Form["raw"];
+                user.raw = Request.Unvalidated["raw"];
                 user.thsId = Int32.Parse(Request.QueryString["thsId"]);
                 user.thsUType = Int32.Parse(Request.Form["thsUType"]);
 

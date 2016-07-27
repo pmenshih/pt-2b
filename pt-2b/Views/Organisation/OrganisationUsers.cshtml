@@ -15,19 +15,19 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.name)
+            Фамилия
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.patronim)
+            Имя
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.surname)
+            Отчество
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.email)
+            Почта
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.sex)
+            Пол
         </th>
         <th></th>
     </tr>
@@ -35,13 +35,13 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.surname)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.name)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.patronim)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.surname)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.email)
@@ -50,8 +50,8 @@
             @Html.DisplayFor(modelItem => item.sex)
         </td>
         <td>
-            <a href="/users/Edit/@item.id?orgId=@org.id">Edit</a> |
-            <a href="/users/Delete/@item.id?orgId=@org.id">Delete</a>
+            <a href="/users/Edit/@item.id?orgId=@org.id">Редактировать</a> |
+            <a href="/users/Delete/@item.id?orgId=@org.id">Удалить</a>
         </td>
     </tr>
 }

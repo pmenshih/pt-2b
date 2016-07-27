@@ -1,11 +1,14 @@
 ﻿@model pt_2b.Models.THSForm
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Создание 360";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    pt_2b.Models.DataBase db = new pt_2b.Models.DataBase();
+    int orgId = Int32.Parse(Request.QueryString["orgId"]);
+    pt_2b.Models.Organisation org = db.Organisations.Where(x => x.id == orgId).Single();
 }
 
-<h2>Create</h2>
+<h2>@org.name</h2>
 
 
 @using (Html.BeginForm()) 
@@ -13,27 +16,21 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>THSForm</h4>
+        <h4>Создание анкеты 360</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.name, "Название", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.organisationId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.organisationId, new { htmlAttributes = new { @class = "form-control", @Value = Request.QueryString["orgId"] } })
-                @Html.ValidationMessageFor(model => model.organisationId, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        @Html.HiddenFor(model => model.organisationId, new { @Value = Request.QueryString["orgId"] })
 
         <div class="form-group">
-            @Html.LabelFor(model => model.targetName, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.targetName, "Имя таргета", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.targetName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.targetName, "", new { @class = "text-danger" })
@@ -41,7 +38,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.defScenario, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.defScenario, "Сценарий по умолчанию", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.defScenario, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.defScenario, "", new { @class = "text-danger" })
@@ -50,7 +47,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <button class="btn btn-default" type="submit">Сохранить</button>
             </div>
         </div>
     </div>

@@ -146,6 +146,8 @@ namespace pt_2b.Controllers
         {
             User user = db.User.Find(id);
             db.User.Remove(user);
+            db.UsersOrganisations.RemoveRange(db.UsersOrganisations.Where(x => x.userId == id));
+            db.THSUsers.RemoveRange(db.THSUsers.Where(x => x.userId == id));
             db.SaveChanges();
             if (Request.QueryString["orgId"] != null)
             {

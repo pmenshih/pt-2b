@@ -12,12 +12,5 @@ namespace pt_2b.Controllers
         {
             return View();
         }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Информация о сервисе анкетирования.";
-
-            return View();
-        }
     }
 }

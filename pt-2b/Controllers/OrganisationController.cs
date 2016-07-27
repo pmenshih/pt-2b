@@ -90,38 +90,11 @@ namespace pt_2b.Controllers
             {
                 db.Entry(organisation).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return Redirect("/organisation/Details/" + organisation.id.ToString());
             }
             return View(organisation);
         }
-
-        // GET: Organisation/Delete/5
-        [Authorize(Roles = "admin")]
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Organisation organisation = db.Organisations.Find(id);
-            if (organisation == null)
-            {
-                return HttpNotFound();
-            }
-            return View(organisation);
-        }
-
-        // POST: Organisation/Delete/5[HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "admin")]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Organisation organisation = db.Organisations.Find(id);
-            db.Organisations.Remove(organisation);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -131,6 +104,7 @@ namespace pt_2b.Controllers
             base.Dispose(disposing);
         }
 
+        //Список пользователей организации
         // GET: Users
         [Authorize(Roles = "admin")]
         public ActionResult OrganisationUsers()

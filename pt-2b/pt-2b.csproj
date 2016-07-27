@@ -252,7 +252,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
@@ -285,11 +284,8 @@
     <Content Include="Views\Organisation\Index.cshtml" />
     <Content Include="Views\Organisation\Details.cshtml" />
     <Content Include="Views\THSForms\Create.cshtml" />
-    <Content Include="Views\THSForms\Delete.cshtml" />
     <Content Include="Views\THSForms\Details.cshtml" />
     <Content Include="Views\THSForms\Edit.cshtml" />
-    <Content Include="Views\THSForms\Index.cshtml" />
-    <Content Include="Views\THSForms\Start.cshtml" />
     <Content Include="Views\THSForms\Finish.cshtml" />
     <Content Include="Views\THSForms\Filling.cshtml" />
     <Content Include="Views\THSForms\AllreadyDone.cshtml" />
@@ -299,13 +295,8 @@
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Organisation\Create.cshtml" />
-    <Content Include="Views\THSUsers\Create.cshtml" />
     <Content Include="Views\THSUsers\Delete.cshtml" />
-    <Content Include="Views\THSUsers\Details.cshtml" />
-    <Content Include="Views\THSUsers\Edit.cshtml" />
-    <Content Include="Views\THSUsers\Index.cshtml" />
     <Content Include="Views\Organisation\Edit.cshtml" />
-    <Content Include="Views\Organisation\Delete.cshtml" />
     <Content Include="Views\Organisation\OrganisationUsers.cshtml" />
     <Content Include="Views\THSForms\THSUsersAdd.cshtml" />
   </ItemGroup>

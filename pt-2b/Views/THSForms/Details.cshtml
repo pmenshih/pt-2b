@@ -65,7 +65,7 @@
         <dd>
             @foreach (var u in notCompleted)
             {
-                <a href="/THSForms/SendEmail?id=@Model.id&userId=@u.id&uIType=@u.uIType">письмо</a> @(u.surname + " " + u.name)<br/>
+                <a href="/THSForms/SendEmail?id=@Model.id&orgId=@Request.QueryString["orgId"]&userId=@u.id&uIType=@u.uIType">письмо</a> @(u.surname + " " + u.name)<br/>
             }
         </dd>
     </dl>
@@ -80,7 +80,7 @@
     else
     {
         @Html.ActionLink("Edit", "Edit", new { id = Model.id })
-        @Html.Raw("|") @Html.ActionLink("Back to List", "Index")
+        @Html.Raw(" | ") @Html.ActionLink("Back to List", "Index")
     }
 </p>
 <div>
@@ -105,4 +105,4 @@
     }
     </table>
 </div>
-<a href="/THSForms/SendEmail?id=@Model.id">Разослать письма</a>
+<a href="/THSForms/SendEmail?id=@Model.id&orgId=@Request.QueryString["orgId"]">Разослать письма</a>
