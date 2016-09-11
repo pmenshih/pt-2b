@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -44,7 +45,7 @@ namespace pt_2b.Controllers
         // POST: THSForms/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost, ValidateInput(false)]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "admin")]
         public ActionResult Create([Bind(Include = "id,name,organisationId,targetName,defScenario")] THSForm tHSForm)
@@ -90,8 +91,22 @@ namespace pt_2b.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(tHSForm).State = EntityState.Modified;
-                db.SaveChanges();
+                string query = @"UPDATE thsForms
+                                SET name=@p0
+                                    ,targetName=@p1
+                                    ,defScenario=@p2
+                                WHERE id=@p3";
+                db.Database.ExecuteSqlCommand(query, tHSForm.name, tHSForm.targetName, tHSForm.defScenario, tHSForm.id);
+
+                //проверим наличие галочки на обновление сценария для всех акторов 360
+                if (Request.Form["settoall"] != null)
+                {
+                    query = @"UPDATE THSUsers
+                                    SET raw=@p0
+                                    WHERE thsId=@p1";
+                    db.Database.ExecuteSqlCommand(query, tHSForm.defScenario, tHSForm.id);
+                }
+
                 if (Request.QueryString["orgId"] != null)
                 {
                     return Redirect("/THSForms/Details/" + tHSForm.id.ToString() + "?orgId=" + Request.QueryString["orgId"]);
@@ -339,7 +354,7 @@ namespace pt_2b.Controllers
             string companyName = "";
 
             //перебираем ответы
-            foreach (THSUser ta in db.THSUsers.Where(x => x.thsId == thsuId && x.answered == 1))
+            foreach (THSUser ta in db.THSUsers.Where(x => x.thsId == thsuId && x.answered == 1).OrderBy(x => x.thsUType))
             {
                 //идентификатор ответа из БД
                 csv += ta.id.ToString() + ";";
@@ -571,5 +586,18 @@ namespace pt_2b.Controllers
         public int utype { get; set; }
     }
 
-    
+    public class THSFormsList
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+        public string targetName { get; set; }
+        public int completed { get; set; }
+        public int cnt { get; set; }
+    }
+
+    public class THSFormsUserAllCompleted
+    {
+        public int fieldA { get; set; }
+        public int fieldB { get; set; }
+    }
 }

@@ -3,6 +3,25 @@
 @{
     ViewBag.Title = Model.name;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string query = @"SELECT tf.id
+		                    ,tf.name
+		                    ,tf.targetName
+		                    ,COUNT(CASE tu.answered WHEN 1 THEN 1 ELSE NULL END) as completed
+		                    ,(COUNT(*)-1) as cnt
+                            ,(COUNT(*)-1-COUNT(CASE tu.answered WHEN 1 THEN 1 ELSE NULL END)) as dif
+                    FROM THSForms tf, THSUsers tu
+                    WHERE tf.organisationId=" + Model.id.ToString() + @"
+	                    AND (tu.thsId=tf.id OR tu.thsId=0)
+                    GROUP BY tf.id, tf.name, tf.targetName
+                    ";
+    if (Request.QueryString["sort"] == "b")
+    {
+        query += " ORDER BY dif DESC";
+    }
+    else
+    {
+        query += " ORDER BY tf.name";
+    }
 }
 
 <h2>@Model.name</h2>
@@ -32,11 +51,18 @@
 @{
     DataBase db = new DataBase();
 }
-    <h4>Оценки 360 <a href="/thsforms/Create?orgId=@Model.id">добавить</a></h4>
-    @foreach (THSForm item in db.THSForms.Where(m => m.organisationId == Model.id))
+    <h4>Оценки 360(@db.THSForms.Where(m => m.organisationId == Model.id).Count()) <a href="/thsforms/Create?orgId=@Model.id">добавить</a></h4>
+    сортировать по: <a href="/Organisation/Details/@Model.id?sort=a">алфавиту</a> / <a href="/Organisation/Details/@Model.id?sort=b">заполненности</a>
+    <br /><a href="/Organisation/THSFormsOwners?orgId=@Model.id">Должники одним листом</a>
+    <br/><br/>
+    @foreach (var item in db.Database.SqlQuery<pt_2b.Controllers.THSFormsList>(query))
     {
         <div>
             <a href="/THSForms/Details/@item.id?orgId=@Model.id">@item.name</a>
+            @if (@item.completed < @item.cnt || @item.cnt == 0)
+            {
+                @Html.Raw(item.completed.ToString() + "/" + item.cnt.ToString())
+            }
         </div>
     }
 </div>

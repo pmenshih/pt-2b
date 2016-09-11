@@ -299,6 +299,7 @@
     <Content Include="Views\Organisation\Edit.cshtml" />
     <Content Include="Views\Organisation\OrganisationUsers.cshtml" />
     <Content Include="Views\THSForms\THSUsersAdd.cshtml" />
+    <Content Include="Views\Organisation\THSFormsOwners.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

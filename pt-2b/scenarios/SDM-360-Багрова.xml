@@ -1,0 +1,248 @@
+	<Test name="Ассессмент сотрудников компании" code="sdm" username="sdm" company="СДМ Банк">
+		<Questions>
+			<Question type="hard" position="1" text="Оцените, насколько утверждение ниже соответствует качествам @utype@ Багровой Анны Владимировны в баллах от 1 до 5, где 5 — человек полностью соответствует утверждению, 1 — полное несоответствие человека приведенному утверждению. Если вы не наблюдали качество и не можете его оценить, выберите «0».\n\n\nПрислушивается к мнению о себе, нормально реагирует на критику">
+				<Answers>
+					<Answer position="1">5 — полностью соответствует</Answer>
+					<Answer position="2">4 — в большей степени соответствует</Answer>
+					<Answer position="3">3 — средняя степень соответствия</Answer>
+					<Answer position="4">2 — частично соответствует</Answer>
+					<Answer position="5">1 — абсолютно не соответствует</Answer>
+					<Answer position="6">0 — не могу оценить</Answer>
+				</Answers>
+			</Question>
+			<Question type="hard" position="2" text="Умеет наладить отношения с разными типами людей, в том числе со сложными.">
+				<Answers>
+					<Answer position="1">5 — полностью соответствует</Answer>
+					<Answer position="2">4 — в большей степени соответствует</Answer>
+					<Answer position="3">3 — средняя степень соответствия</Answer>
+					<Answer position="4">2 — частично соответствует</Answer>
+					<Answer position="5">1 — абсолютно не соответствует</Answer>
+					<Answer position="6">0 — не могу оценить</Answer>
+				</Answers>
+			</Question>
+			<Question type="hard" position="3" text="Не боится конфликтов, умеет конструктивно их разрешать.">
+				<Answers>
+					<Answer position="1">5 — полностью соответствует</Answer>
+					<Answer position="2">4 — в большей степени соответствует</Answer>
+					<Answer position="3">3 — средняя степень соответствия</Answer>
+					<Answer position="4">2 — частично соответствует</Answer>
+					<Answer position="5">1 — абсолютно не соответствует</Answer>
+					<Answer position="6">0 — не могу оценить</Answer>
+				</Answers>
+			</Question>
+			<Question type="hard" position="4" text="Всегда готова выслушать, проявляет понимание к личным проблемам.">
+				<Answers>
+					<Answer position="1">5 — полностью соответствует</Answer>
+					<Answer position="2">4 — в большей степени соответствует</Answer>
+					<Answer position="3">3 — средняя степень соответствия</Answer>
+					<Answer position="4">2 — частично соответствует</Answer>
+					<Answer position="5">1 — абсолютно не соответствует</Answer>
+					<Answer position="6">0 — не могу оценить</Answer>
+				</Answers>
+			</Question>
+			<Question type="hard" position="5" text="Открыта, доступна, идет на контакт, интересуется мнением людей.">
+				<Answers>
+					<Answer position="1">5 — полностью соответствует</Answer>
+					<Answer position="2">4 — в большей степени соответствует</Answer>
+					<Answer position="3">3 — средняя степень соответствия</Answer>
+					<Answer position="4">2 — частично соответствует</Answer>
+					<Answer position="5">1 — абсолютно не соответствует</Answer>
+					<Answer position="6">0 — не могу оценить</Answer>
+				</Answers>
+			</Question>
+			<Question type="hard" position="6" text="Заинтересована в самосовершенствовании, постоянно работает над собой.">
+				<Answers>
+					<Answer position="1">5 — полностью соответствует</Answer>
+					<Answer position="2">4 — в большей степени соответствует</Answer>
+					<Answer position="3">3 — средняя степень соответствия</Answer>
+					<Answer position="4">2 — частично соответствует</Answer>
+					<Answer position="5">1 — абсолютно не соответствует</Answer>
+					<Answer position="6">0 — не могу оценить</Answer>
+				</Answers>
+			</Question>
+			<Question type="hard" position="7" text="Стремится улучшать рабочие процессы и услуги, выдвигает новые идеи.">
+				<Answers>
+					<Answer position="1">5 — полностью соответствует</Answer>
+					<Answer position="2">4 — в большей степени соответствует</Answer>
+					<Answer position="3">3 — средняя степень соответствия</Answer>
+					<Answer position="4">2 — частично соответствует</Answer>
+					<Answer position="5">1 — абсолютно не соответствует</Answer>
+					<Answer position="6">0 — не могу оценить</Answer>
+				</Answers>
+			</Question>
+			<Question type="hard" position="8" text="Использует ошибки как возможность научиться чему-то, улучшить что-то.">
+				<Answers>
+					<Answer position="1">5 — полностью соответствует</Answer>
+					<Answer position="2">4 — в большей степени соответствует</Answer>
+					<Answer position="3">3 — средняя степень соответствия</Answer>
+					<Answer position="4">2 — частично соответствует</Answer>
+					<Answer position="5">1 — абсолютно не соответствует</Answer>
+					<Answer position="6">0 — не могу оценить</Answer>
+				</Answers>
+			</Question>
+			<Question type="hard" position="9" text="Даёт конструктивную обратную связь, выдерживая баланс позитива и негатива.">
+				<Answers>
+					<Answer position="1">5 — полностью соответствует</Answer>
+					<Answer position="2">4 — в большей степени соответствует</Answer>
+					<Answer position="3">3 — средняя степень соответствия</Answer>
+					<Answer position="4">2 — частично соответствует</Answer>
+					<Answer position="5">1 — абсолютно не соответствует</Answer>
+					<Answer position="6">0 — не могу оценить</Answer>
+				</Answers>
+			</Question>
+			<Question type="hard" position="10" text="В случае необходимости не боится применять решительные меры воздействия.">
+				<Answers>
+					<Answer position="1">5 — полностью соответствует</Answer>
+					<Answer position="2">4 — в большей степени соответствует</Answer>
+					<Answer position="3">3 — средняя степень соответствия</Answer>
+					<Answer position="4">2 — частично соответствует</Answer>
+					<Answer position="5">1 — абсолютно не соответствует</Answer>
+					<Answer position="6">0 — не могу оценить</Answer>
+				</Answers>
+			</Question>
+			<Question type="hard" position="11" text="Посвящает время первоочередным задачам, концентрируется на главном.">
+				<Answers>
+					<Answer position="1">5 — полностью соответствует</Answer>
+					<Answer position="2">4 — в большей степени соответствует</Answer>
+					<Answer position="3">3 — средняя степень соответствия</Answer>
+					<Answer position="4">2 — частично соответствует</Answer>
+					<Answer position="5">1 — абсолютно не соответствует</Answer>
+					<Answer position="6">0 — не могу оценить</Answer>
+				</Answers>
+			</Question>
+			<Question type="hard" position="12" text="Действует как эксперт, разбирается в деталях и тонкостях процессов.">
+				<Answers>
+					<Answer position="1">5 — полностью соответствует</Answer>
+					<Answer position="2">4 — в большей степени соответствует</Answer>
+					<Answer position="3">3 — средняя степень соответствия</Answer>
+					<Answer position="4">2 — частично соответствует</Answer>
+					<Answer position="5">1 — абсолютно не соответствует</Answer>
+					<Answer position="6">0 — не могу оценить</Answer>
+				</Answers>
+			</Question>
+			<Question type="hard" position="13" text="Принимает решения обоснованно, с учетом всех обстоятельств.">
+				<Answers>
+					<Answer position="1">5 — полностью соответствует</Answer>
+					<Answer position="2">4 — в большей степени соответствует</Answer>
+					<Answer position="3">3 — средняя степень соответствия</Answer>
+					<Answer position="4">2 — частично соответствует</Answer>
+					<Answer position="5">1 — абсолютно не соответствует</Answer>
+					<Answer position="6">0 — не могу оценить</Answer>
+				</Answers>
+			</Question>
+			<Question type="hard" position="14" text="Четко ставит задачи, всегда понятно, что и для чего нужно делать.">
+				<Answers>
+					<Answer position="1">5 — полностью соответствует</Answer>
+					<Answer position="2">4 — в большей степени соответствует</Answer>
+					<Answer position="3">3 — средняя степень соответствия</Answer>
+					<Answer position="4">2 — частично соответствует</Answer>
+					<Answer position="5">1 — абсолютно не соответствует</Answer>
+					<Answer position="6">0 — не могу оценить</Answer>
+				</Answers>
+			</Question>
+			<Question type="hard" position="15" text="Умело планирует и распределяет работу.">
+				<Answers>
+					<Answer position="1">5 — полностью соответствует</Answer>
+					<Answer position="2">4 — в большей степени соответствует</Answer>
+					<Answer position="3">3 — средняя степень соответствия</Answer>
+					<Answer position="4">2 — частично соответствует</Answer>
+					<Answer position="5">1 — абсолютно не соответствует</Answer>
+					<Answer position="6">0 — не могу оценить</Answer>
+				</Answers>
+			</Question>
+			<Question type="hard" position="16" text="Работы не боится, смело берётся за дело и действует с полным напряжением сил.">
+				<Answers>
+					<Answer position="1">5 — полностью соответствует</Answer>
+					<Answer position="2">4 — в большей степени соответствует</Answer>
+					<Answer position="3">3 — средняя степень соответствия</Answer>
+					<Answer position="4">2 — частично соответствует</Answer>
+					<Answer position="5">1 — абсолютно не соответствует</Answer>
+					<Answer position="6">0 — не могу оценить</Answer>
+				</Answers>
+			</Question>
+			<Question type="hard" position="17" text="Старается довести дело до конца, даже при наличии противодействия.">
+				<Answers>
+					<Answer position="1">5 — полностью соответствует</Answer>
+					<Answer position="2">4 — в большей степени соответствует</Answer>
+					<Answer position="3">3 — средняя степень соответствия</Answer>
+					<Answer position="4">2 — частично соответствует</Answer>
+					<Answer position="5">1 — абсолютно не соответствует</Answer>
+					<Answer position="6">0 — не могу оценить</Answer>
+				</Answers>
+			</Question>
+			<Question type="hard" position="18" text="Держит выполнение поставленных задач под постоянным контролем.">
+				<Answers>
+					<Answer position="1">5 — полностью соответствует</Answer>
+					<Answer position="2">4 — в большей степени соответствует</Answer>
+					<Answer position="3">3 — средняя степень соответствия</Answer>
+					<Answer position="4">2 — частично соответствует</Answer>
+					<Answer position="5">1 — абсолютно не соответствует</Answer>
+					<Answer position="6">0 — не могу оценить</Answer>
+				</Answers>
+			</Question>
+			<Question type="hard" position="19" text="Эффективно и экономно использует своё рабочее время.">
+				<Answers>
+					<Answer position="1">5 — полностью соответствует</Answer>
+					<Answer position="2">4 — в большей степени соответствует</Answer>
+					<Answer position="3">3 — средняя степень соответствия</Answer>
+					<Answer position="4">2 — частично соответствует</Answer>
+					<Answer position="5">1 — абсолютно не соответствует</Answer>
+					<Answer position="6">0 — не могу оценить</Answer>
+				</Answers>
+			</Question>
+			<Question type="hard" position="20" text="Интересуется информацией о клиентах для повышения качества услуг.">
+				<Answers>
+					<Answer position="1">5 — полностью соответствует</Answer>
+					<Answer position="2">4 — в большей степени соответствует</Answer>
+					<Answer position="3">3 — средняя степень соответствия</Answer>
+					<Answer position="4">2 — частично соответствует</Answer>
+					<Answer position="5">1 — абсолютно не соответствует</Answer>
+					<Answer position="6">0 — не могу оценить</Answer>
+				</Answers>
+			</Question>
+			<Question type="hard" position="21" text="Умеет вдохновить и замотивировать.">
+				<Answers>
+					<Answer position="1">5 — полностью соответствует</Answer>
+					<Answer position="2">4 — в большей степени соответствует</Answer>
+					<Answer position="3">3 — средняя степень соответствия</Answer>
+					<Answer position="4">2 — частично соответствует</Answer>
+					<Answer position="5">1 — абсолютно не соответствует</Answer>
+					<Answer position="6">0 — не могу оценить</Answer>
+				</Answers>
+			</Question>
+			<Question type="hard" position="22" text="Пользуется доверием. Имеет репутацию прямого и открытого человека.">
+				<Answers>
+					<Answer position="1">5 — полностью соответствует</Answer>
+					<Answer position="2">4 — в большей степени соответствует</Answer>
+					<Answer position="3">3 — средняя степень соответствия</Answer>
+					<Answer position="4">2 — частично соответствует</Answer>
+					<Answer position="5">1 — абсолютно не соответствует</Answer>
+					<Answer position="6">0 — не могу оценить</Answer>
+				</Answers>
+			</Question>
+			<Question type="hard" position="23" text="Создает атмосферу, в которой каждый старается максимально проявить себя.">
+				<Answers>
+					<Answer position="1">5 — полностью соответствует</Answer>
+					<Answer position="2">4 — в большей степени соответствует</Answer>
+					<Answer position="3">3 — средняя степень соответствия</Answer>
+					<Answer position="4">2 — частично соответствует</Answer>
+					<Answer position="5">1 — абсолютно не соответствует</Answer>
+					<Answer position="6">0 — не могу оценить</Answer>
+				</Answers>
+			</Question>
+			<Question type="hard" position="24" text="Хорошо говорит публично, уверенно выступает перед коллегами и начальниками.">
+				<Answers>
+					<Answer position="1">5 — полностью соответствует</Answer>
+					<Answer position="2">4 — в большей степени соответствует</Answer>
+					<Answer position="3">3 — средняя степень соответствия</Answer>
+					<Answer position="4">2 — частично соответствует</Answer>
+					<Answer position="5">1 — абсолютно не соответствует</Answer>
+					<Answer position="6">0 — не могу оценить</Answer>
+				</Answers>
+			</Question>
+			<Question type="text" position="25" text="Какое сильное качество руководителя есть у человека, которого вы оцениваете?">
+			</Question>
+			<Question type="text" position="26" text="Какое качество, нужное руководителю, ей следует развивать?">
+			</Question>
+		</Questions>
+	</Test>

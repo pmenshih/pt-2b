@@ -120,5 +120,11 @@ namespace pt_2b.Controllers
             
             return View(db.Database.SqlQuery<User>(query).ToList());
         }
+
+        [Authorize(Roles = "admin")]
+        public ActionResult THSFormsOwners()
+        {
+            return View();
+        }
     }
 }

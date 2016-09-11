@@ -1,0 +1,87 @@
+﻿@{
+    ViewBag.Title = "THSFormsOwners";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string queryA = @"SELECT * FROM Users u WHERE u.id IN (
+	                SELECT DISTINCT tu.userId
+	                FROM THSForms tf, THSUsers tu
+	                WHERE tf.organisationId = " + Request.QueryString["orgId"] + @"
+		                AND tu.thsId = tf.id
+		                AND tu.answered = 0
+		                )
+                    ORDER BY u.surname, u.name, u.patronim";
+
+    pt_2b.Models.DataBase db = new pt_2b.Models.DataBase();
+}
+
+<h2>Должники</h2>
+
+<p>
+    <a href="/Organisation/Details/@Request.QueryString["orgId"]">Вернуться к организации</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <td>
+                <b>ФИО</b>
+            </td>
+            <td>
+                <b>З</b>
+            </td>
+            <td>
+                <b>В</b>
+            </td>
+            <td>
+                <b>Р</b>
+            </td>
+            <td>
+                <b>Незаполненные оценки</b>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (pt_2b.Models.User user in db.Database.SqlQuery<pt_2b.Models.User>(queryA))
+        {
+            <tr>
+                <td nowrap>
+                    @user.surname @user.name @user.patronim
+                </td>
+                <td nowrap>
+                    @{
+                        string queryB = @"SELECT COUNT(*) as fieldA
+	                                        ,COUNT(CASE tu.answered WHEN 1 THEN 1 ELSE NULL END) as fieldB
+                                        FROM THSUsers tu
+                                        WHERE tu.userId = " + user.id.ToString();
+
+                        pt_2b.Controllers.THSFormsUserAllCompleted cnts = db.Database.SqlQuery<pt_2b.Controllers.THSFormsUserAllCompleted>(queryB).Single();
+                    }
+                    @cnts.fieldB
+                </td>
+                <td>
+                    @cnts.fieldA
+                </td>
+                <td>
+                    @(cnts.fieldA-cnts.fieldB)
+                </td>
+                <td>
+                    @{
+                        string queryC = @"SELECT tf.id, tf.name, tf.organisationId, tf.targetName, tf.defScenario
+                                        FROM THSForms tf, THSUsers tu
+                                        WHERE tf.id = tu.thsId
+	                                        AND tu.userId = " + user.id.ToString() + @"
+                                            AND tu.answered = 0";
+
+                        string result = "";
+
+                        foreach (pt_2b.Models.THSForm form in db.Database.SqlQuery<pt_2b.Models.THSForm>(queryC))
+                        {
+                            result += form.targetName + ", ";
+                        }
+                        result = result.TrimEnd(' ').TrimEnd(',');
+                    }
+                    @result
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
