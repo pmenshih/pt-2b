@@ -121,6 +121,54 @@ namespace pt_2b.Controllers
                     tBox.form.questions[tBox.currentQuestion].answer = Request.Form["answerText"];
                     tBox.currentQuestion++;
                 }
+                //мягкая альтернатива
+                else if (tBox.form.questions[tBox.currentQuestion].type == "soft")
+                {
+                    bool rangeExceed = false;
+                    string answerString = "";
+
+                    System.Collections.Hashtable answers = new System.Collections.Hashtable();
+                    
+                    foreach (string key in Request.Form.AllKeys)
+                    {
+                        if (key.StartsWith("answer"))
+                        {
+                            string hKey = key.Replace("answer", "");
+                            string hVal = Request.Form[key];
+                            answers.Add(hKey, hVal);
+                            answerString += hVal + "@#@" + hKey + "@%@";
+                        }
+                    }
+                    if(answers.Count > 0) answerString = answerString.Substring(0, answerString.Length - 3);
+
+                    if((tBox.form.questions[tBox.currentQuestion].minimum != 0 && answers.Count < tBox.form.questions[tBox.currentQuestion].minimum)
+                        || (tBox.form.questions[tBox.currentQuestion].maximum != 0 && answers.Count > tBox.form.questions[tBox.currentQuestion].maximum))
+                        rangeExceed = true;
+
+                    if (!rangeExceed)
+                    {
+                        //сбрасываем ключи к секретным вопросам (сделано на случай использования кнопки назад и переответов на вопросы)
+                        tBox.form.questions[tBox.currentQuestion].keys = "";
+                        //перебираем ответы вопроса
+                        foreach (Answer a in tBox.form.questions[tBox.currentQuestion].answers)
+                        {
+                            //если у ответа есть ключ к секеретному вопросу
+                            if (a.keyto > 0)
+                            {
+                                //и этот ответ выбран
+                                if (answers.ContainsKey(a.position.ToString()) && a.Value == answers[a.position.ToString()].ToString())
+                                {
+                                    //добавим ключ разблокировки на соответствующий вопрос
+                                    tBox.form.questions[tBox.currentQuestion].keys += a.keyto.ToString() + ";";
+                                }
+                            }
+                        }
+                        
+                        tBox.form.questions[tBox.currentQuestion].answer = answerString;
+
+                        tBox.currentQuestion++;
+                    }
+                }
 
                 while (true)
                 {
@@ -255,8 +303,17 @@ namespace pt_2b.Controllers
                     byte[] destBytes = Encoding.Convert(srcEnc, destEnc, srcBytes);
                     ans = destEnc.GetString(destBytes);
                     //---------------
+                    //если в ответе содержится специальный разделитель, значит это мягкая альтернатива и в файл результатов нужно добавить номера выбранных ответов
+                    if (ans.Contains("@%@"))
+                    {
+                        foreach (string answer in Regex.Split(ans, "@%@"))
+                        {
+                            csv += Regex.Split(answer, "@#@")[1] + ",";
+                        }
+                        csv = csv.TrimEnd(',');
+                    }
                     //если в ответе содержится специальный разделитель, значит это жесткая альтернатива и номер ответа идёт после его текста
-                    if (ans.Contains("@#@"))
+                    else if (ans.Contains("@#@"))
                     {
                         csv += Regex.Split(ans, "@#@")[1];
                     }

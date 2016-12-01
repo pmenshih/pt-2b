@@ -97,6 +97,12 @@ namespace pt_2b.Models
         public string answer = "";
 
         public string keys = "";
+
+        [XmlAttribute]
+        public int minimum = 0;
+
+        [XmlAttribute]
+        public int maximum = 0;
     }
     
     public class Answer

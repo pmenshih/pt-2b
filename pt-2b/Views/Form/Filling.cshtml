@@ -25,6 +25,15 @@
                     }
                 </div>
             }
+            else if (Model.form.questions[Model.currentQuestion].type == "soft")
+            {
+                <div class="btn-group-vertical" data-toggle="buttons">
+                    @foreach (var a in Model.form.questions[Model.currentQuestion].answers)
+                    {
+                        <label class="btn btn-default" id="answerSoftButton" style="text-align: left;"><input type="checkbox" name="@("answer" + a.position)" id="@("answer" + a.position)" value="@a.Value" />@a.Value</label>
+                    }
+                </div>
+            }
             else if (Model.form.questions[Model.currentQuestion].type == "text")
             {
                 <textarea class="form-control" rows="5" name="answerText"></textarea>
