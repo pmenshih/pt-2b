@@ -114,6 +114,10 @@ namespace pt_2b.Controllers
 
                         tBox.currentQuestion++;
                     }
+                    else if (tBox.form.questions[tBox.currentQuestion].answers.Count() == 0)
+                    {
+                        tBox.currentQuestion++;
+                    }
                 }
                 //открытый вопрос
                 else if (tBox.form.questions[tBox.currentQuestion].type == "text")
@@ -182,7 +186,7 @@ namespace pt_2b.Controllers
                         foreach (Question q in tBox.form.questions)
                         {
                             //если в ответах есть ключ к этому вопросу, то
-                            if (q.keys.Contains((tBox.currentQuestion + 1).ToString()))
+                            if (q.keys.Contains((tBox.form.questions[tBox.currentQuestion].position).ToString()))
                             {
                                 //разблокируем его
                                 haveKey = true;
@@ -214,7 +218,7 @@ namespace pt_2b.Controllers
                         bool haveKey = false;
                         foreach (Question q in tBox.form.questions)
                         {
-                            if (q.keys.Contains((tBox.currentQuestion + 1).ToString()))
+                            if (q.keys.Contains((tBox.form.questions[tBox.currentQuestion].position).ToString()))
                             {
                                 haveKey = true;
                                 break;
@@ -275,6 +279,13 @@ namespace pt_2b.Controllers
             foreach (Question q in form.questions)
             {
                 answersCount++;
+
+                //вставляем q0 если есть преамбула
+                if (answersCount == 1 && q.answers.Count() == 0)
+                {
+                    answersCount--;
+                }
+
                 csv += ";q" + answersCount.ToString();
             }
             csv += ";\r\n";

@@ -252,7 +252,7 @@ namespace pt_2b.Controllers
                         foreach (Question q in thsBox.form.questions)
                         {
                             //если в ответах есть ключ к этому вопросу, то
-                            if (q.keys.Contains((thsBox.currentQuestion + 1).ToString()))
+                            if (q.keys.Contains((thsBox.form.questions[thsBox.currentQuestion].position).ToString()))
                             {
                                 //разблокируем его
                                 haveKey = true;
@@ -284,7 +284,7 @@ namespace pt_2b.Controllers
                         bool haveKey = false;
                         foreach (Question q in thsBox.form.questions)
                         {
-                            if (q.keys.Contains((thsBox.currentQuestion + 1).ToString()))
+                            if (q.keys.Contains((thsBox.form.questions[thsBox.currentQuestion].position).ToString()))
                             {
                                 haveKey = true;
                                 break;
@@ -338,7 +338,7 @@ namespace pt_2b.Controllers
             string csv = "";
 
             //подсчитываем количество ответов и формируем нулевую строку файла
-            csv += ";t;n";
+            csv += ";ta;n;t";
             foreach (Question q in form.questions)
             {
                 answersCount++;
@@ -351,7 +351,16 @@ namespace pt_2b.Controllers
             Encoding srcEnc = Encoding.UTF8;
             Encoding destEnc = Encoding.GetEncoding(1251);
 
-            string companyName = "";
+            //string companyName = "";
+
+            AspNetUser target = new AspNetUser();
+            target.Surname = "";
+            target.Name = "";
+            try
+            {
+                target = db.Database.SqlQuery<AspNetUser>("SELECT * FROM AspNetUsers WHERE id = (SELECT userId FROM THSUsers WHERE thsId=" + thsuId.ToString() + " AND thsUType=1)").Single();
+            }
+            catch (Exception) { }
 
             //перебираем ответы
             foreach (THSUser ta in db.THSUsers.Where(x => x.thsId == thsuId && x.answered == 1).OrderBy(x => x.thsUType))
@@ -359,14 +368,17 @@ namespace pt_2b.Controllers
                 //идентификатор ответа из БД
                 csv += ta.id.ToString() + ";";
 
+                //Фамилия Имя таргета
+                csv += target.Surname + " " + target.Name + ";";
+
                 //тип оценщика
                 THSUserTypes uType = db.THSUserType.Where(x => x.id == ta.thsUType).Single();
                 csv += uType.name + ";";
                 //csv += ta.thsUType.ToString() + ";";
 
                 //Фамилия Имя оценщика
-                User user = db.User.Where(x => x.id == ta.userId).Single();
-                csv += user.surname + " " + user.name + ";";
+                AspNetUser user = db.AspNetUsers.Where(x => x.Id == ta.userId).Single();
+                csv += user.Surname + " " + user.Name + ";";
 
                 //десериализуем тест (вместе с ответами)
                 Form tBoxa = form.DeserializeFromXmlString(ta.raw);
@@ -394,7 +406,8 @@ namespace pt_2b.Controllers
                 answersCount++;
             }
 
-            string filename = String.Format("360-{0}-{1}.csv", thsu.thsId.ToString(), answersCount.ToString());
+            string curDT = DateTime.Now.Year.ToString() + "." + DateTime.Now.Month.ToString() + "." + DateTime.Now.Day.ToString() + " " + DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString();
+            string filename = String.Format("360-{0}-{1} {2}.csv", thsu.thsId.ToString(), answersCount.ToString(), curDT);
             return File(destEnc.GetBytes(csv), "text/csv", filename);
         }
 
@@ -541,7 +554,7 @@ namespace pt_2b.Controllers
                 user.thsUType = Int32.Parse(Request.Form["thsUType"]);
 
                 string userEmail = Request.Form["userName"].ToString().Split(':')[1].TrimStart(' ');
-                user.userId = db.User.Where(x => x.email == userEmail).Select(x => x.id).Single();
+                user.userId = db.AspNetUsers.Where(x => x.Email == userEmail).Select(x => x.Id).Single();
 
                 do
                 {
@@ -566,7 +579,7 @@ namespace pt_2b.Controllers
             }
             else if (Request.QueryString["thsUId"] != null)
             {
-                int uid = Int32.Parse(Request.QueryString["thsUId"]);
+                string uid = Request.QueryString["thsUId"];
                 int thsId = Int32.Parse(Request.QueryString["thsId"]);
                 THSUser tu = db.THSUsers.Where(x => x.thsId == thsId && x.userId == uid).Single();
                 return View();
@@ -593,6 +606,8 @@ namespace pt_2b.Controllers
         public string targetName { get; set; }
         public int completed { get; set; }
         public int cnt { get; set; }
+        public int dif { get; set; }
+        public DateTime dateCreate { get; set; }
     }
 
     public class THSFormsUserAllCompleted

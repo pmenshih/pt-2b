@@ -1,4 +1,4 @@
-﻿@model IEnumerable<pt_2b.Models.User>
+﻿@model IEnumerable<pt_2b.Models.AspNetUser>
 
 @{
     pt_2b.Models.Organisation org = (pt_2b.Models.Organisation)ViewData["org"];
@@ -10,7 +10,7 @@
 <h2>«<a href="/organisation/details/@org.id">@org.name</a>» — пользователи</h2>
 
 <p>
-    <a href="/users/Create?orgId=@org.id">Добавить пользователя</a>
+    <a href="/organisation/usersCreate?orgId=@org.id">Добавить пользователя</a>
 </p>
 <table class="table">
     <tr>
@@ -32,28 +32,29 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.surname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.patronim)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.sex)
-        </td>
-        <td>
-            <a href="/users/Edit/@item.id?orgId=@org.id">Редактировать</a> |
-            <a href="/users/Delete/@item.id?orgId=@org.id">Удалить</a>
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Surname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Patronim)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sex)
+            </td>
+            <td>
+                <a href="/organisation/usersEdit/@item.Id?orgId=@org.id">Редактировать</a> |
+                <a href="/organisation/usersdelete/@item.Id?orgId=@org.id">Удалить</a>
+            </td>
+        </tr>
+    }
 
 </table>

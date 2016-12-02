@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "THSFormsStats";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string query = @"SELECT tf.id
+		                    ,tf.name
+		                    ,tf.targetName
+		                    ,COUNT(CASE tu.answered WHEN 1 THEN 1 ELSE NULL END)-1 as completed
+		                    ,(COUNT(*)-1) as cnt
+                            ,(COUNT(*)-COUNT(CASE tu.answered WHEN 1 THEN 1 ELSE NULL END)) as dif
+                    FROM THSForms tf, THSUsers tu
+                    WHERE tf.organisationId=" + Request.QueryString["orgId"] + @"
+	                    AND (tu.thsId=tf.id OR tu.thsId=0)
+                    GROUP BY tf.id, tf.name, tf.targetName
+                    ";
+
+    pt_2b.Models.DataBase db = new pt_2b.Models.DataBase();
+
+    if (Request.QueryString["sort"] == "b")
+    {
+        query += " ORDER BY dif DESC, tf.name ASC";
+    }
+    else
+    {
+        query += " ORDER BY tf.name, dif DESC";
+    }
+}
+
+<h2>Статистика незаполненных анкет</h2>
+
+<p>
+    <a href="/Organisation/Details/@Request.QueryString["orgId"]">Вернуться к организации</a>
+    <br/>
+    <br/>
+    сортировать по: <a href="/Organisation/THSFormsStat?orgId=@Request.QueryString["orgId"]">алфавиту</a> / <a href="/Organisation/THSFormsStat?orgId=@Request.QueryString["orgId"]&sort=b">заполненности</a>
+</p>
+
+@foreach (var item in db.Database.SqlQuery<pt_2b.Controllers.THSFormsList>(query))
+{
+    <div>
+        @if (@item.dif > 0)
+        {
+            <p>
+                <a href="/THSForms/Details/@item.id?orgId=@Request.QueryString["orgId"]">@item.name</a>
+                @Html.Raw(item.completed.ToString() + "/" + item.cnt.ToString())
+                <br />
+                @{ 
+                    var notCompleted = db.THSUsers.Where(x => x.thsId == item.id && x.answered == 0).Join(db.AspNetUsers, t => t.userId, u => u.Id, (t, u) => new
+                    {
+                        name = u.Name
+                        ,surname = u.Surname
+                        ,id = u.Id
+                        ,email = u.Email
+                        ,code = t.code
+                        ,uIType = t.thsUType
+                    }).OrderBy(x => x.surname).ThenBy(x => x.name);
+                }
+                @foreach (var u in notCompleted)
+                {
+                    @(u.surname + " " + u.name)<br />
+                }
+            </p>
+        }
+    </div>
+}

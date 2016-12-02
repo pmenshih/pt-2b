@@ -1,14 +1,14 @@
 ﻿@{
     ViewBag.Title = "THSFormsOwners";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    string queryA = @"SELECT * FROM Users u WHERE u.id IN (
+    string queryA = @"SELECT * FROM AspNetUsers u WHERE u.id IN (
 	                SELECT DISTINCT tu.userId
 	                FROM THSForms tf, THSUsers tu
 	                WHERE tf.organisationId = " + Request.QueryString["orgId"] + @"
 		                AND tu.thsId = tf.id
 		                AND tu.answered = 0
 		                )
-                    ORDER BY u.surname, u.name, u.patronim";
+                    ORDER BY u.Surname, u.Name, u.Patronim";
 
     pt_2b.Models.DataBase db = new pt_2b.Models.DataBase();
 }
@@ -40,18 +40,18 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (pt_2b.Models.User user in db.Database.SqlQuery<pt_2b.Models.User>(queryA))
+        @foreach (pt_2b.Models.AspNetUser user in db.Database.SqlQuery<pt_2b.Models.AspNetUser>(queryA))
         {
             <tr>
                 <td nowrap>
-                    @user.surname @user.name @user.patronim
+                    @user.Surname @user.Name @user.Patronim
                 </td>
                 <td nowrap>
                     @{
                         string queryB = @"SELECT COUNT(*) as fieldA
 	                                        ,COUNT(CASE tu.answered WHEN 1 THEN 1 ELSE NULL END) as fieldB
                                         FROM THSUsers tu
-                                        WHERE tu.userId = " + user.id.ToString();
+                                        WHERE tu.userId = '" + user.Id.ToString() + "'";
 
                         pt_2b.Controllers.THSFormsUserAllCompleted cnts = db.Database.SqlQuery<pt_2b.Controllers.THSFormsUserAllCompleted>(queryB).Single();
                     }
@@ -61,14 +61,14 @@
                     @cnts.fieldA
                 </td>
                 <td>
-                    @(cnts.fieldA-cnts.fieldB)
+                    @(cnts.fieldA - cnts.fieldB)
                 </td>
                 <td>
                     @{
-                        string queryC = @"SELECT tf.id, tf.name, tf.organisationId, tf.targetName, tf.defScenario
+                        string queryC = @"SELECT tf.id, tf.name, tf.organisationId, tf.targetName, tf.defScenario, tf.dateCreate
                                         FROM THSForms tf, THSUsers tu
                                         WHERE tf.id = tu.thsId
-	                                        AND tu.userId = " + user.id.ToString() + @"
+	                                        AND tu.userId = '" + user.Id.ToString() + @"'
                                             AND tu.answered = 0";
 
                         string result = "";
@@ -82,6 +82,6 @@
                     @result
                 </td>
             </tr>
-        }
+                        }
     </tbody>
 </table>

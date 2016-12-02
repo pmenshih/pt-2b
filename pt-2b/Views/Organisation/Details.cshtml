@@ -53,8 +53,8 @@
 }
     <h4>Оценки 360(@db.THSForms.Where(m => m.organisationId == Model.id).Count()) <a href="/thsforms/Create?orgId=@Model.id">добавить</a></h4>
     сортировать по: <a href="/Organisation/Details/@Model.id?sort=a">алфавиту</a> / <a href="/Organisation/Details/@Model.id?sort=b">заполненности</a>
-    <br /><a href="/Organisation/THSFormsOwners?orgId=@Model.id">Должники одним листом</a>
-    <br/><br/>
+    <br /><a href="/Organisation/THSFormsOwners?orgId=@Model.id">Должники одним листом</a>&nbsp;|&nbsp;<a href="/Organisation/THSFormsStat?orgId=@Model.id">Статистика незаполненных анкет</a>
+    <br /><br />
     @foreach (var item in db.Database.SqlQuery<pt_2b.Controllers.THSFormsList>(query))
     {
         <div>

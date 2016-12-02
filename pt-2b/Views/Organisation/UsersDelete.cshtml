@@ -1,4 +1,4 @@
-﻿@model pt_2b.Models.User
+﻿@model pt_2b.Models.AspNetUser
 
 @{
     ViewBag.Title = "Удаление пользователя";
@@ -10,11 +10,12 @@
 <h2>Удаление пользователя</h2>
 
 <div>
-    <h4>@(Model.surname + " " + Model.name + " : " + Model.email)</h4>
+    <h4>@(Model.Surname + " " + Model.Name + " : " + Model.Email)</h4>
     <h4>Удалить пользователя?</h4>
     <hr />
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">

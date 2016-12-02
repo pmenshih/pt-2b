@@ -16,6 +16,11 @@ namespace pt_2b.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public string Patronim { get; set; }
+        public int? Sex { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

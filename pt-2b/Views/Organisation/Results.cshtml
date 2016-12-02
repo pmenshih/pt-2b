@@ -1,0 +1,35 @@
+﻿@model pt_2b.Controllers.OrganisationResults
+
+@{
+    ViewBag.Title = "Результаты 360";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    pt_2b.Models.DataBase db = new pt_2b.Models.DataBase();
+}
+
+<h2>Результаты 360</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        <div class="form-group">
+            @Html.LabelFor(model => model.organisations, "Организация", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                   @Html.DropDownList("orgs", Model.organisations, "Все")
+            </div>
+        </div>
+        <div class="form-group">
+            По группе
+        </div>
+        <div class="form-group">
+            По дате
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button class="btn btn-default" type="submit">Скачать</button>
+            </div>
+        </div>
+    </div>
+}

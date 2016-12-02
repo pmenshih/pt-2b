@@ -17,7 +17,7 @@ namespace pt_2b.Models
     public class THSUser
     {
         public int id { get; set; }
-        public int userId { get; set; }
+        public string userId { get; set; }
         public int thsId { get; set; }
         public int thsUType { get; set; }
         public string code { get; set; }

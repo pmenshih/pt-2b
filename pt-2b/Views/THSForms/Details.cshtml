@@ -11,21 +11,21 @@
     DataBase db = new DataBase();
     string answered = db.THSUsers.Where(x => x.thsId == Model.id && x.answered == 1).Count().ToString();
     string total = db.THSUsers.Where(x => x.thsId == Model.id).Count().ToString();
-    var notCompleted = db.THSUsers.Where(x => x.thsId == Model.id && x.answered == 0).Join(db.User, t => t.userId, u => u.id, (t, u) => new
+    var notCompleted = db.THSUsers.Where(x => x.thsId == Model.id && x.answered == 0).Join(db.AspNetUsers, t => t.userId, u => u.Id, (t, u) => new
     {
-        name = u.name
-        ,surname = u.surname
-        ,id = u.id
-        ,email = u.email
+        name = u.Name
+        ,surname = u.Surname
+        ,id = u.Id
+        ,email = u.Email
         ,code = t.code
         ,uIType = t.thsUType
     });
-    var allUsers = db.THSUsers.Where(x => x.thsId == Model.id).Join(db.User, t => t.userId, u => u.id, (t, u) => new
+    var allUsers = db.THSUsers.Where(x => x.thsId == Model.id).Join(db.AspNetUsers, t => t.userId, u => u.Id, (t, u) => new
     {
-        name = u.name
-        ,surname = u.surname
-        ,id = u.id
-        ,email = u.email
+        name = u.Name
+        ,surname = u.Surname
+        ,id = u.Id
+        ,email = u.Email
         ,code = t.code
         ,uIType = t.thsUType
         ,answered = t.answered

@@ -7,15 +7,15 @@
     int thsId = Int32.Parse(Request.QueryString["thsId"]);
     pt_2b.Models.THSForm form = db.THSForms.Where(x => x.id == thsId).Single();
     string query = @"SELECT * FROM 
-	                    Users u
+	                    AspNetUsers u
 	                    ,UsersOrganisations uo 
                     WHERE u.id = uo.userId
 	                    AND uo.organisationId = " + Request.QueryString["orgId"];
-    var users = db.Database.SqlQuery<pt_2b.Models.User>(query);
+    var users = db.Database.SqlQuery<pt_2b.Models.AspNetUser>(query);
     string usersList = "'[";
     foreach (var user in users)
     {
-        usersList += "\"" + user.surname + " " + user.name + " : " + user.email + "\",";
+        usersList += "\"" + user.Surname + " " + user.Name + " : " + user.Email + "\",";
     }
     usersList = usersList.TrimEnd(',') + "]'";
 

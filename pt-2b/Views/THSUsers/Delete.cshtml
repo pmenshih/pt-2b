@@ -7,18 +7,19 @@
     int orgId = Int32.Parse(Request.QueryString["orgId"]);
     pt_2b.Models.Organisation org = db.Organisations.Where(x => x.id == orgId).Single();
     pt_2b.Models.THSForm ths = db.THSForms.Where(x => x.id == Model.thsId).Single();
-    pt_2b.Models.User user = db.User.Where(x => x.id == Model.userId).Single();
+    pt_2b.Models.AspNetUser user = db.AspNetUsers.Where(x => x.Id == Model.userId).Single();
 }
 
 <h2>@ths.name</h2>
 
 <h3></h3>
 <div>
-    <h4>@(user.surname + " " + user.name + " : " + user.email)</h4>
+    <h4>@(user.Surname + " " + user.Name + " : " + user.Email)</h4>
     <h4>Удалить актора?</h4>
     <hr />
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
