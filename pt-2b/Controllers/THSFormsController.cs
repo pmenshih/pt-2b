@@ -466,11 +466,20 @@ namespace pt_2b.Controllers
                     strBoss = "подчинённой";
                 }
 
+                string targetName = uName;
+
+                try
+                {
+                    targetName = uName.Split(' ')[1];
+                }
+                catch (Exception) { }
+
                 switch (user.utype)
                 {
                     case 1:
                         mail.Subject = "Оцените себя";
                         uType = "<b>" + strIam + " себя</b>";
+                        targetName = "Вас";
                         break;
                     case 2:
                         uType = "<b>" + strBoss + "</b>, " + uName;
@@ -494,13 +503,7 @@ namespace pt_2b.Controllers
                         break;
                 }
 
-                string targetName = uName;
-
-                try
-                {
-                    targetName = uName.Split(' ')[1];
-                }
-                catch (Exception) { }
+                
 
                 string mText = strDear + " коллега!<br/><br/>" +
                             "Просим Вас оценить управленческие качества " + uType + ".<br/> " +
