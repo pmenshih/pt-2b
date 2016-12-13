@@ -412,12 +412,12 @@ namespace pt_2b.Controllers
         }
 
         [Authorize(Roles = "admin")]
-        public ActionResult SendEmail(int id, int userId = 0, int uIType = 0)
+        public ActionResult SendEmail(int id, string userId, int uIType = 0)
         {
-            string query = "select tu.code as code, u.email as email, u.sex, u.name as name, u.patronim as patronim, u.surname as surname, tu.thsUType as utype from thsusers tu, users u where tu.thsid = " + id.ToString() + " and tu.userid=u.id and tu.answered=0";
-            if (userId != 0 && uIType != 0)
+            string query = "select tu.code as code, u.Email as email, u.Sex as sex, u.Name as name, u.Patronim as patronim, u.Surname as surname, tu.thsUType as utype from thsusers tu, AspNetUsers u where tu.thsid = " + id.ToString() + " and tu.userid=u.Id and tu.answered=0";
+            if (userId != null && uIType != 0)
             {
-                query = "select tu.code as code, u.email as email, u.sex, u.name as name, u.patronim as patronim, u.surname as surname, tu.thsUType as utype from thsusers tu, users u where tu.userId=u.id and tu.thsid = " + id.ToString() + " and tu.userid=" + userId.ToString() + " and tu.thsUType=" + uIType.ToString();
+                query = "select tu.code as code, u.Email as email, u.Sex as sex, u.Name as name, u.Patronim as patronim, u.Surname as surname, tu.thsUType as utype from thsusers tu, AspNetUsers u where tu.userId=u.Id and tu.thsid = " + id.ToString() + " and tu.userid='" + userId.ToString() + "' and tu.thsUType=" + uIType.ToString();
             }
 
             var users = db.Database.SqlQuery<usrs>(query).ToList();
@@ -473,16 +473,16 @@ namespace pt_2b.Controllers
                         uType = "<b>" + strIam + " себя</b>";
                         break;
                     case 2:
+                        uType = "<b>" + strBoss + "</b>, " + uName;
+                        mail.Subject = "Оценка " + strBoss + " " + uName;
+                        break;
+                    case 3:
                         uType = /*"<b>коллеги</b>," + */uName;
                         mail.Subject = "Оценка коллеги " + uType;
                         break;
-                    case 3:
+                    case 4:
                         uType = "<b>руководителя</b>, " + uName;
                         mail.Subject = "Оценка руководителя " + uName;
-                        break;
-                    case 4:
-                        uType = "<b>" + strBoss + "</b>, " + uName;
-                        mail.Subject = "Оценка " + strBoss + " " + uName;
                         break;
                     case 5:
                         mail.Subject = "Оценка коллеги " + uName;
