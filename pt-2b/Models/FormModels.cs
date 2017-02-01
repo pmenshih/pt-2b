@@ -111,7 +111,7 @@ namespace pt_2b.Models
         public int position { get; set; }
 
         [XmlAttribute]
-        public int keyto { get; set; }
+        public string keyto { get; set; }
 
         [XmlText]
         public string Value { get; set; }

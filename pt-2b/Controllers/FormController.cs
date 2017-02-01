@@ -91,14 +91,19 @@ namespace pt_2b.Controllers
                         //перебираем ответы вопроса
                         foreach (Answer a in tBox.form.questions[tBox.currentQuestion].answers)
                         {
+                            List<string> keys = new List<string>();
+                            if (!String.IsNullOrEmpty(a.keyto)) {
+                                keys = a.keyto.Split(',').ToList();
+                            }
+
                             //если у ответа есть ключ к секеретному вопросу
-                            if (a.keyto > 0)
+                            foreach(string s in keys)
                             {
                                 //и выбран именно этот ответ
                                 if (a.Value == tBox.form.questions[tBox.currentQuestion].answer)
                                 {
                                     //добавим ключ разблокировки на соответствующий вопрос
-                                    tBox.form.questions[tBox.currentQuestion].keys += a.keyto.ToString() + ";";
+                                    tBox.form.questions[tBox.currentQuestion].keys += s + ";";
                                 }
                             }
                             
@@ -156,14 +161,20 @@ namespace pt_2b.Controllers
                         //перебираем ответы вопроса
                         foreach (Answer a in tBox.form.questions[tBox.currentQuestion].answers)
                         {
+                            List<string> keys = new List<string>();
+                            if (!String.IsNullOrEmpty(a.keyto))
+                            {
+                                keys = a.keyto.Split(',').ToList();
+                            }
+
                             //если у ответа есть ключ к секеретному вопросу
-                            if (a.keyto > 0)
+                            foreach (string s in keys)
                             {
                                 //и этот ответ выбран
                                 if (answers.ContainsKey(a.position.ToString()) && a.Value == answers[a.position.ToString()].ToString())
                                 {
                                     //добавим ключ разблокировки на соответствующий вопрос
-                                    tBox.form.questions[tBox.currentQuestion].keys += a.keyto.ToString() + ";";
+                                    tBox.form.questions[tBox.currentQuestion].keys += s + ";";
                                 }
                             }
                         }

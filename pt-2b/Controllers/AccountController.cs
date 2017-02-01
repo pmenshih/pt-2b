@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using pt_2b.Models;
+using System.Net.Http;
 
 namespace pt_2b.Controllers
 {
@@ -422,6 +423,37 @@ namespace pt_2b.Controllers
 
             base.Dispose(disposing);
         }
+        
+        /*[AllowAnonymous]
+        public async Task<ActionResult> ResetPasswordByPhoneNumber(string phonenumber)
+        {
+            DataBase db = new DataBase();
+            AspNetUser user = db.AspNetUsers.Where(x => x.PhoneNumber == phonenumber).Single();
+
+            string chars = "1234567890";
+            string code = "";
+            Random rnd = new Random();
+            for (int i = 0; i < 6; i++)
+            {
+                int next = rnd.Next(0, 10);
+                code += chars.Substring(next, 1);
+            }
+
+            code = "Scientex17";
+
+            using (var client = new HttpClient())
+            {
+                string phone = phonenumber.TrimStart('+');
+                string message = "Пароль — " + code + ". С уважением, команда psycho.ru.";
+                var responseString = await client.GetStringAsync("http://gate.smsaero.ru/send/?user=p.menshih@gmail.com&password=KXJ89D5fTLDE4jPC6V8P1RRMtfb&to=" + phone + "&text=" + message + "&from=psycho.ru&type=3");
+
+                HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().RemovePassword(user.Id);
+                HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().AddPassword(user.Id, code);
+                //HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().ResetPassword(user.Id, user.SecurityStamp, code);
+            }
+
+            return Redirect("/account/login");
+        }*/
 
         #region Helpers
         // Used for XSRF protection when adding external logins

@@ -147,6 +147,10 @@ namespace pt_2b.Controllers
                 thsBox.form.code = code;
                 thsBox.form.username = tu.id.ToString();
 
+                // замена @targetName@ на имя таргета, указанное в настройках данной 360
+                THSForm tForm = (THSForm)db.THSForms.Where(x => x.id == tu.thsId).SingleOrDefault();
+                thsBox.form.questions[thsBox.currentQuestion].text = thsBox.form.questions[thsBox.currentQuestion].text.Replace("@targetName@", tForm.targetName);
+
                 //заменим \n на <br/>
                 thsBox.form.questions[thsBox.currentQuestion].text = thsBox.form.questions[thsBox.currentQuestion].text.Replace("\\n", "<br/>");
 
@@ -209,14 +213,20 @@ namespace pt_2b.Controllers
                         //перебираем ответы вопроса
                         foreach (Answer a in thsBox.form.questions[thsBox.currentQuestion].answers)
                         {
+                            List<string> keys = new List<string>();
+                            if (!String.IsNullOrEmpty(a.keyto))
+                            {
+                                keys = a.keyto.Split(',').ToList();
+                            }
+
                             //если у ответа есть ключ к секеретному вопросу
-                            if (a.keyto > 0)
+                            foreach (string s in keys)
                             {
                                 //и выбран именно этот ответ
                                 if (a.Value == thsBox.form.questions[thsBox.currentQuestion].answer)
                                 {
                                     //добавим ключ разблокировки на соответствующий вопрос
-                                    thsBox.form.questions[thsBox.currentQuestion].keys += a.keyto.ToString() + ";";
+                                    thsBox.form.questions[thsBox.currentQuestion].keys += s + ";";
                                 }
                             }
 

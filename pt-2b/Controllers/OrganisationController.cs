@@ -190,7 +190,7 @@ namespace pt_2b.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (db.AspNetUsers.Where(x => x.PhoneNumber == user.PhoneNumber).Count() > 0)
+                if (!String.IsNullOrEmpty(user.PhoneNumber) && db.AspNetUsers.Where(x => x.PhoneNumber == user.PhoneNumber).Count() > 0)
                 {
                     return View(user);
                 }
