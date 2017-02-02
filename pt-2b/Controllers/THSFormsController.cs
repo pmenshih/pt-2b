@@ -282,6 +282,9 @@ namespace pt_2b.Controllers
             //нажали кнопочку "Назад"
             else if (Request.Form["action"] == "prev")
             {
+                //очистка ответа текущего вопроса
+                thsBox.form.questions[thsBox.currentQuestion].answer = "";
+
                 if (thsBox.currentQuestion > 0) thsBox.currentQuestion--;
 
                 //повторяем операцию проверки секретного вопроса и наличия ответа на него как в примере с конопкой "Вперед"
@@ -433,23 +436,6 @@ namespace pt_2b.Controllers
             var users = db.Database.SqlQuery<usrs>(query).ToList();
             foreach (var user in users)
             {
-                //Отправка письма через Google
-                /*
-                //SmtpClient smtpClient = new SmtpClient(WebConfigurationManager.AppSettings["siteMailHost"], Int32.Parse(WebConfigurationManager.AppSettings["siteMailPort"]));
-                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
-                smtpClient.EnableSsl = true;
-                smtpClient.UseDefaultCredentials = false;
-                smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-                smtpClient.Credentials = new System.Net.NetworkCredential("psycho.mail.robot@gmail.com", "123456qW");
-
-                MailMessage mail = new MailMessage();
-                mail.IsBodyHtml = true;
-                mail.From = new MailAddress("office@psycho.ru", "Центр оценки psycho.ru");
-                mail.To.Add(new MailAddress(user.email));
-                */
-
-                //Отправка письма через Яндекс
-                //SmtpClient smtpClient = new SmtpClient(WebConfigurationManager.AppSettings["siteMailHost"], Int32.Parse(WebConfigurationManager.AppSettings["siteMailPort"]));
                 SmtpClient smtpClient = new SmtpClient("smtp.yandex.ru", 587);
                 smtpClient.EnableSsl = true;
                 smtpClient.UseDefaultCredentials = false;
@@ -478,49 +464,51 @@ namespace pt_2b.Controllers
 
                 string targetName = uName;
 
-                try
+                /*try
                 {
                     targetName = uName.Split(' ')[1];
                 }
-                catch (Exception) { }
+                catch (Exception) { }*/
 
                 switch (user.utype)
                 {
                     case 1:
-                        mail.Subject = "Оцените себя";
+                        //mail.Subject = "Оцените себя";
                         uType = "<b>" + strIam + " себя</b>";
-                        targetName = "Вас";
+                        targetName = "Вы";
                         break;
                     case 2:
                         uType = "<b>" + strBoss + "</b>, " + uName;
-                        mail.Subject = "Оценка " + strBoss + " " + uName;
+                        //mail.Subject = "Оценка " + strBoss + " " + uName;
                         break;
                     case 3:
                         uType = /*"<b>коллеги</b>," + */uName;
-                        mail.Subject = "Оценка коллеги " + uType;
+                        //mail.Subject = "Оценка коллеги " + uType;
                         break;
                     case 4:
                         uType = "<b>руководителя</b>, " + uName;
-                        mail.Subject = "Оценка руководителя " + uName;
+                        //mail.Subject = "Оценка руководителя " + uName;
                         break;
                     case 5:
                         mail.Subject = "Оценка коллеги " + uName;
                         uType = /*"<b>коллеги</b>," + */uName;
                         break;
                     case 6:
-                        mail.Subject = "Оценка коллеги " + uName;
+                        //mail.Subject = "Оценка коллеги " + uName;
                         uType = /*"<b>коллеги</b>," + */uName;
                         break;
                 }
 
-                
+                mail.Subject = "Оценка кандидатов в кадровый резерв. Кандидат " + targetName + ".";
 
                 string mText = strDear + " коллега!<br/><br/>" +
-                            "Просим Вас оценить управленческие качества " + uType + ".<br/> " +
-                            "Данные, которые будут получены, имеют важное значение для совершенствования " + targetName + " как руководителя, помогут определить сильные стороны и качества, которые необходимо развивать. Результаты оценки будут сведены в общий документ без указания, кто давал оценку.<br/><br/> " +
+                            "В настоящее время в «НПО Энергомаш» реализуется программа работы с кадровым резервом.<br/>" +
+                            "Просим Вас принять участие в этой программе в части «Оценка управленческих качеств руководителей».<br/><br/>" +
+                            "Кандидат для оценки — " + targetName + ".<br/><br/>" +
+                            "Данные, которые будут получены, имеют важное значение для совершенствования кандидата, помогут определить сильные стороны и качества, которые необходимо развивать. Результаты оценки будут сведены в общий документ без указания, кто давал оценку.<br/><br/> " +
                             "<a href=\"http://test.psycho.ru/THSForms/Filling?code=" + user.code + "\">Для заполнения анкеты перейдите по ссылке</a>.<br/><br/>Если у Вас возникнут  вопросы, пишите нам на <a href=\"mailto:office@psycho.ru\">office@psycho.ru</a>.<br/>С уважением, команда psycho.ru.";
 
-                if (user.utype == 5)
+                /*if (user.utype == 5)
                 {
                     Organisation org = db.Organisations.Where(x => x.id == thsForm.organisationId).First();
                     mText = strDear + " " + user.name + "!<br/><br/>" +
@@ -529,7 +517,7 @@ namespace pt_2b.Controllers
                             "Вам предстоить оценить управленческие качества " + uType + ".<br/> " +
                             "Данные, которые будут получены, имеют важное значение для совершенствования " + targetName + " как руководителя, помогут определить сильные стороны и качества, которые необходимо развивать. Результаты оценки будут сведены в общий документ без указания, кто давал оценку.<br/><br/> " +
                             "<a href=\"http://test.psycho.ru/THSForms/Filling?code=" + user.code + "\">Для заполнения анкеты перейдите по ссылке</a>.<br/><br/>Если у Вас возникнут  вопросы, пишите нам на <a href=\"mailto:office@psycho.ru\">office@psycho.ru</a>.<br/>С уважением, команда psycho.ru.";
-                }
+                }*/
 
                 mail.Body = mText;
 

@@ -1,0 +1,51 @@
+﻿@model pt_2b.Models.Organisations.Views.UsersImport
+@{
+    ViewBag.Title = "Импорт пользователей из файла";
+}
+
+<h2>@ViewBag.Title</h2>
+@if (Model.uploadHistory.Count > 0)
+{
+    <div>
+        Предыдущие загрузки
+        <ul>
+            @foreach (pt_2b.Models.Organisations.Views.UsersUploadHistoryViewEntity e in Model.uploadHistory)
+            {
+                <li>
+                    <a href="/organisation/usersuploadfile?id=@e.id">@e.dateCreate.ToString("dd.MM.yyyy HH:mm:ss") — @e.usersCount</a>
+                </li>
+            }
+        </ul>
+    </div>
+}
+<a href="/organisation/organisationusers?orgId=@Model.orgId">Вернуться к списку</a>
+@using (Html.BeginForm("importusers", "organisation", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @:Сепаратор:
+    <input type="text" value="@Model.separator" name="separator" />
+    <input type="file" name="filename" />
+    <input type="hidden" name="orgId" value="@Model.orgId" />
+    <input type="submit" value="Загрузить" />
+}
+
+@if (Model.showResult)
+{
+    <div>
+        Всего строк данных: @Model.rowsCount
+        <br />Из них:
+        <br />успешно распознано: @Model.rowsCorrect
+        <br />Добавлено пользователей: @Model.usersAdded
+        @if (Model.errorLog.Count > 0)
+        {
+            @:<br />Нераспознанные строки и недобавленные пользователи:
+            foreach (pt_2b.Core.UploadFailedString log in Model.errorLog)
+            {
+                <div style="padding-left: 20px; padding-bottom: 5px;">
+                    <i>Строка @log.rowNumber.ToString()</i> : <span style="background-color: #e2e2e2;">@log.rowData</span>
+                    <br /><u>Причина:</u> некорректное поле <b>@log.failedColumnName:</b> @log.failedColumnData
+                </div>
+            }
+        }
+
+    </div>
+}

@@ -217,7 +217,10 @@ namespace pt_2b.Controllers
             //нажали кнопочку "Назад"
             else if (Request.Form["action"] == "prev")
             {
-                if(tBox.currentQuestion > 0) tBox.currentQuestion--;
+                //очистка ответа текущего вопроса
+                tBox.form.questions[tBox.currentQuestion].answer = "";
+
+                if (tBox.currentQuestion > 0) tBox.currentQuestion--;
 
                 //повторяем операцию проверки секретного вопроса и наличия ответа на него как в примере с конопкой "Вперед"
                 while (true)

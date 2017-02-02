@@ -20,6 +20,7 @@ namespace pt_2b.Models
         public System.Data.Entity.DbSet<pt_2b.Models.UsersOrganisations> UsersOrganisations { get; set; }
         public System.Data.Entity.DbSet<pt_2b.Models.THSForm> THSForms { get; set; }
         public DbSet<AspNetUser> AspNetUsers { get; set; }
+        public DbSet<Organisations.OrganisationsUsersFile> OrganisationsUsersFiles { get; set; }
     }
 
     public class AspNetUser
