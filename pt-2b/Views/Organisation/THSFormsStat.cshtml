@@ -19,6 +19,10 @@
     {
         query += " ORDER BY dif DESC, tf.name ASC";
     }
+    else if (Request.QueryString["sort"] == "c")
+    {
+        query += " ORDER BY completed ASC, tf.name ASC";
+    }
     else
     {
         query += " ORDER BY tf.name, dif DESC";
@@ -31,7 +35,7 @@
     <a href="/Organisation/Details/@Request.QueryString["orgId"]">Вернуться к организации</a>
     <br/>
     <br/>
-    сортировать по: <a href="/Organisation/THSFormsStat?orgId=@Request.QueryString["orgId"]">алфавиту</a> / <a href="/Organisation/THSFormsStat?orgId=@Request.QueryString["orgId"]&sort=b">заполненности</a>
+    сортировать по: <a href="/Organisation/THSFormsStat?orgId=@Request.QueryString["orgId"]">алфавиту</a> / <a href="/Organisation/THSFormsStat?orgId=@Request.QueryString["orgId"]&sort=b">заполненности</a> / <a href="/Organisation/THSFormsStat?orgId=@Request.QueryString["orgId"]&sort=c">кол-ву ответивших</a>
 </p>
 
 @foreach (var item in db.Database.SqlQuery<pt_2b.Controllers.THSFormsList>(query))

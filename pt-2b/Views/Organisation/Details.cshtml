@@ -6,21 +6,26 @@
     string query = @"SELECT tf.id
 		                    ,tf.name
 		                    ,tf.targetName
-		                    ,COUNT(CASE tu.answered WHEN 1 THEN 1 ELSE NULL END) as completed
+                            ,tf.dateCreate
+		                    ,COUNT(CASE tu.answered WHEN 1 THEN 1 ELSE NULL END)-1 as completed
 		                    ,(COUNT(*)-1) as cnt
-                            ,(COUNT(*)-1-COUNT(CASE tu.answered WHEN 1 THEN 1 ELSE NULL END)) as dif
+                            ,(COUNT(*)-COUNT(CASE tu.answered WHEN 1 THEN 1 ELSE NULL END)) as dif
                     FROM THSForms tf, THSUsers tu
                     WHERE tf.organisationId=" + Model.id.ToString() + @"
 	                    AND (tu.thsId=tf.id OR tu.thsId=0)
-                    GROUP BY tf.id, tf.name, tf.targetName
+                    GROUP BY tf.id, tf.name, tf.targetName, tf.dateCreate
                     ";
     if (Request.QueryString["sort"] == "b")
     {
-        query += " ORDER BY dif DESC";
+        query += " ORDER BY dif DESC, tf.name ASC";
+    }
+    else if (Request.QueryString["sort"] == "c")
+    {
+        query += " ORDER BY completed ASC, tf.name ASC";
     }
     else
     {
-        query += " ORDER BY tf.name";
+        query += " ORDER BY tf.name, dif DESC";
     }
 }
 
@@ -52,7 +57,7 @@
     DataBase db = new DataBase();
 }
     <h4>Оценки 360(@db.THSForms.Where(m => m.organisationId == Model.id).Count()) <a href="/thsforms/Create?orgId=@Model.id">добавить</a></h4>
-    сортировать по: <a href="/Organisation/Details/@Model.id?sort=a">алфавиту</a> / <a href="/Organisation/Details/@Model.id?sort=b">заполненности</a>
+    сортировать по: <a href="/Organisation/Details/@Model.id?sort=a">алфавиту</a> / <a href="/Organisation/Details/@Model.id?sort=b">заполненности</a> / <a href="/Organisation/Details/@Model.id?sort=c">кол-ву ответов</a>
     <br /><a href="/Organisation/THSFormsOwners?orgId=@Model.id">Должники одним листом</a>&nbsp;|&nbsp;<a href="/Organisation/THSFormsStat?orgId=@Model.id">Статистика незаполненных анкет</a>
     <br /><br />
     @foreach (var item in db.Database.SqlQuery<pt_2b.Controllers.THSFormsList>(query))
