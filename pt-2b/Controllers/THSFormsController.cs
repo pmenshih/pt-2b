@@ -52,6 +52,7 @@ namespace pt_2b.Controllers
         {
             if (ModelState.IsValid)
             {
+                tHSForm.researchId = tHSForm.organisationId;
                 db.THSForms.Add(tHSForm);
                 db.SaveChanges();
 

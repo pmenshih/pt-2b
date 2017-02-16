@@ -10,6 +10,7 @@ namespace pt_2b.Models
         public int id { get; set; }
         public string name { get; set; }
         public int? organisationId { get; set; }
+        public int? researchId { get; set; }
         public string targetName { get; set; }
         public string defScenario { get; set; }
     }
