@@ -726,6 +726,19 @@ namespace pt_2b.Controllers
             model.organisation = db.Organisations.Find(model.research.orgId);
             return View(model);
         }
+
+        [Authorize(Roles = "admin")]
+        [ValidateInput(false)]
+        [HttpPost]
+        public ActionResult MailTemplate(FormCollection form)
+        {
+            var research = db.OrganisationsResearches.Find(Int32.Parse(form["researchId"]));
+            research.mailTitle = form["mailTitle"];
+            research.mailBody = form["mailBody"];
+            db.Entry(research).State = EntityState.Modified;
+            db.SaveChanges();
+            return Redirect($"/organisation/details/{research.orgId.ToString()}");
+        }
     }
 
     public class OrganisationResults

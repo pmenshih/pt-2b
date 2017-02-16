@@ -526,6 +526,13 @@ namespace pt_2b.Controllers
 
                 mail.Body = mText;
 
+                // подстановка шаблона
+                var research = db.OrganisationsResearches.Find(thsForm.researchId);
+                if (!String.IsNullOrEmpty(research.mailTitle) && !String.IsNullOrEmpty(research.mailBody)) {
+                    mail.Subject = research.mailTitle.Replace("@targetName", targetName).Replace("@code", user.code);
+                    mail.Body = research.mailBody.Replace("@targetName", targetName).Replace("@code", user.code);
+                }
+
                 smtpClient.Send(mail);
             }
 

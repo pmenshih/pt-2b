@@ -5,4 +5,32 @@
 
 <h2>Письмо для «@Model.research.title»</h2>
 <a href="/organisation/details/@Model.organisation.id">Вернуться к организации</a>
-
+<form method="post" action="/organisation/mailtemplate">
+    <div class="form-horizontal">
+        <hr />
+        Ключи:
+        <ul>
+            <li>&#64;targetName — имя таргета из настроек матрицы <u>в именительном падеже</u></li>
+            <li>&#64;code — уникальный код для заполнения анкеты</li>
+        </ul>
+        <hr />
+        <input type="hidden" name="researchId" id="researchId" value="@Model.research.id" />
+        <div class="form-group">
+            <label class="control-label col-md-2">Заголовок:</label>
+            <div class="col-md-10">
+                <input type="text" value="@Model.research.mailTitle" class="form-control" id="mailTitle" name="mailTitle" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Текст:</label>
+            <div class="col-md-10">
+                <textarea class="form-control" rows="10" id="mailBody" name="mailBody">@Model.research.mailBody</textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-default">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</form>
