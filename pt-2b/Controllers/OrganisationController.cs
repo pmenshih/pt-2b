@@ -717,6 +717,15 @@ namespace pt_2b.Controllers
 
             return View(model);
         }
+
+        [Authorize(Roles = "admin")]
+        public ActionResult MailTemplate()
+        {
+            var model = new pt_2b.Models.Organisations.Views.MailTemplate();
+            model.research = pt_2b.Models.OrganisationsResearches.OrganisationsResearch.GetById(Int32.Parse(Request.QueryString["researchId"]));
+            model.organisation = db.Organisations.Find(model.research.orgId);
+            return View(model);
+        }
     }
 
     public class OrganisationResults

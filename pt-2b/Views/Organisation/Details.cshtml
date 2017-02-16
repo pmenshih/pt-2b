@@ -56,7 +56,7 @@
 @{
     DataBase db = new DataBase();
 }
-    <h4>Оценки 360(@db.THSForms.Where(m => m.organisationId == Model.id).Count()) <a href="/thsforms/Create?orgId=@Model.id">добавить</a></h4>
+    <h4>Оценки 360(@db.THSForms.Where(m => m.organisationId == Model.id).Count()) <a href="/thsforms/Create?orgId=@Model.id">добавить</a> | <a href="/organisation/mailtemplate?researchId=@Model.id">шаблон письма</a></h4>
     сортировать по: <a href="/Organisation/Details/@Model.id?sort=a">алфавиту</a> / <a href="/Organisation/Details/@Model.id?sort=b">заполненности</a> / <a href="/Organisation/Details/@Model.id?sort=c">кол-ву ответов</a>
     <br /><a href="/Organisation/THSFormsOwners?orgId=@Model.id">Должники одним листом</a>&nbsp;|&nbsp;<a href="/Organisation/THSFormsStat?orgId=@Model.id">Статистика незаполненных анкет</a>
     <br /><br />

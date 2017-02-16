@@ -1,0 +1,8 @@
+﻿@model pt_2b.Models.Organisations.Views.MailTemplate
+@{
+    ViewBag.Title = "Шаблон письма";
+}
+
+<h2>Письмо для «@Model.research.title»</h2>
+<a href="/organisation/details/@Model.organisation.id">Вернуться к организации</a>
+

@@ -81,6 +81,12 @@ ORDER BY dateCreate DESC";
                 public DateTime dateCreate { get; set; }
                 public int usersCount { get; set; }
             }
+
+            public class MailTemplate
+            {
+                public Organisation organisation;
+                public OrganisationsResearches.OrganisationsResearch research;
+            }
         }
     
     }
