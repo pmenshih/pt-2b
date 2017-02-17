@@ -529,8 +529,8 @@ namespace pt_2b.Controllers
                 // подстановка шаблона
                 var research = db.OrganisationsResearches.Find(thsForm.researchId);
                 if (!String.IsNullOrEmpty(research.mailTitle) && !String.IsNullOrEmpty(research.mailBody)) {
-                    mail.Subject = research.mailTitle.Replace("@targetName", targetName).Replace("@code", user.code);
-                    mail.Body = research.mailBody.Replace("@targetName", targetName).Replace("@code", user.code);
+                    mail.Subject = research.mailTitle.Replace("@targetName", targetName).Replace("@code", user.code).Replace("@dear", strDear);
+                    mail.Body = research.mailBody.Replace("@targetName", targetName).Replace("@code", user.code).Replace("@dear", strDear);
                 }
 
                 smtpClient.Send(mail);
