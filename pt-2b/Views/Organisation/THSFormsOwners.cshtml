@@ -65,7 +65,7 @@
                 </td>
                 <td>
                     @{
-                        string queryC = @"SELECT tf.id, tf.name, tf.organisationId, tf.targetName, tf.defScenario, tf.dateCreate
+                        string queryC = @"SELECT tf.id, tf.name, tf.organisationId, tf.targetName, tf.defScenario, tf.dateCreate, 1 as researchId
                                         FROM THSForms tf, THSUsers tu
                                         WHERE tf.id = tu.thsId
 	                                        AND tu.userId = '" + user.Id.ToString() + @"'
