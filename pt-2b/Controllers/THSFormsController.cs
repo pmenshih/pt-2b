@@ -142,7 +142,7 @@ namespace pt_2b.Controllers
                 thsBox.form = new Form();
                 string code = this.Request.QueryString["code"];
                 THSUser tu = (THSUser)db.THSUsers.Where(t => t.code == code).SingleOrDefault();
-                if (tu == null) {
+                if (tu == null || tu.answered == 1) {
                     return Redirect("/thsforms/allreadydone?code=" + code);
                 }
                 thsBox.form = thsBox.form.DeserializeFromXmlString(tu.raw);
