@@ -141,7 +141,10 @@ namespace pt_2b.Controllers
                 thsBox = new FormBox();
                 thsBox.form = new Form();
                 string code = this.Request.QueryString["code"];
-                THSUser tu = (THSUser)db.THSUsers.Where(t => t.code == code).First();
+                THSUser tu = (THSUser)db.THSUsers.Where(t => t.code == code).SingleOrDefault();
+                if (tu == null) {
+                    return Redirect("/thsforms/allreadydone?code=" + code);
+                }
                 thsBox.form = thsBox.form.DeserializeFromXmlString(tu.raw);
 
                 //ИЗМЕНЕНИЕ ОТНОСИТЕЛЬНО АНКЕТЫ!!!
