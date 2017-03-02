@@ -100,13 +100,13 @@ namespace pt_2b.Controllers
                 db.Database.ExecuteSqlCommand(query, tHSForm.name, tHSForm.targetName, tHSForm.defScenario, tHSForm.id);
 
                 //проверим наличие галочки на обновление сценария для всех акторов 360
-                /*if (Request.Form["settoall"] != null)
+                if (Request.Form["settoall"] != null)
                 {
                     query = @"UPDATE THSUsers
                                     SET raw=@p0
-                                    WHERE thsId=@p1";
+                                    WHERE thsId=@p1 AND answered=0";
                     db.Database.ExecuteSqlCommand(query, tHSForm.defScenario, tHSForm.id);
-                }*/
+                }
 
                 if (Request.QueryString["orgId"] != null)
                 {
